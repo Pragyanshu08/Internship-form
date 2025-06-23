@@ -45,7 +45,7 @@ body {
   color: #ecf0f1;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .toggle-buttons button.active,
@@ -91,7 +91,7 @@ input[type="month"],
 textarea,
 select {
   width: 100%;
-  padding: 0.7rem;
+  padding: 0.7rem 0;
   margin-top: 0.3rem;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -109,7 +109,7 @@ select:focus {
 /* Buttons */
 button.next,
 button.prev,
-button.submit {
+button.submit{
   margin-top: 2rem;
   padding: 0.7rem 1.5rem;
   border: none;
@@ -118,7 +118,7 @@ button.submit {
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -185,4 +185,37 @@ select[multiple] {
 }
 
 
-/* closed */
+/* project form  */
+span input{
+  position: relative;
+  width: auto;
+}
+
+button.add{
+  padding-right: 15px;
+  width: 35px;
+  height: 40px;
+  position: relative;
+  left: 97%;
+  right: 0;
+  top: -42px;
+  border: none;
+  border-left: 1px solid;
+  background-color:transparent;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hide{
+  display: none;
+}
+
+.newInput{
+  height: auto;
+  max-height: 1200px;
+}
+
+button.new{
+  margin-top: 20px;
+}

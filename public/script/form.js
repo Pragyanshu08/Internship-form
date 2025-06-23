@@ -55,6 +55,44 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+
+// Add Section
+let add = document.querySelector(".add");
+
+add.addEventListener("click", function (e) {
+  let span = e.target.parentElement;
+  let container = span.parentElement;
+
+  span.removeChild(e.target);
+
+  let newSpan = document.createElement("span");
+
+  let newInput = document.createElement("input");
+  newInput.type = "text";
+  newInput.name = "tech_uses";
+  
+  let newButton = document.createElement("button");
+  newButton.className = "add";
+  newButton.type = "button";
+  newButton.textContent = "+";
+  
+  let currentId = parseInt(e.target.id) || 1;
+  newButton.id = currentId + 1;
+
+  newButton.addEventListener("click", arguments.callee); 
+
+  newSpan.appendChild(newInput);
+  newSpan.appendChild(newButton);
+
+  container.appendChild(newSpan);
+
+  console.log("New input added. Current button ID:", newButton.id);
+});
+
+
+
+
+
 // Submit form data
 async function submitMultiForm() {
   const inputs = document.querySelectorAll('input, textarea, select');

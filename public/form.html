@@ -15,7 +15,8 @@
       <div onclick="showForm(0)"><button>Personal</button></div>
       <div onclick="showForm(1)"><button>Academic</button></div>
       <div onclick="showForm(2)"><button>Skills</button></div>
-      <div onclick="showForm(3)"><button>Upload Resume</button></div>
+      <div onclick="showForm(3)"><button>Projects</button></div>
+      <div onclick="showForm(4)"><button>Upload Resume</button></div>
     </div>
 
     <!-- Personal Form -->
@@ -109,6 +110,29 @@
       <button type="button" class="next" onclick="showForm(3)">Next ==></button>
     </div>
 
+    <!-- Project Form  -->
+     <div class="form-step form-project">
+      <h2>Your Projects</h2>
+
+      <label>Project Name</label>
+      <input type="text" name="project_name">
+
+      <label for="desc">Description</label>
+      <textarea name="desc" id="desc" rows="3" cols="40"></textarea>
+
+      <label>Developer's role</label>
+      <textarea name="role" rows="3" cols="40"></textarea>
+
+      <label>Technology used</label>
+      <div class="newInput">
+        <span><input type="text" name="tech_uses"><button class="add" id="1">+</button></span>
+      </div>
+
+      <button type="button" class="prev" onclick="showForm(2)"><== Previous</button>
+      <button type="button" class="next" onclick="showForm(4)">Next ==></button>
+     </div>
+
+
     <!-- Upload Resume Form -->
     <div class="form-step form-upload">
       <h2>Upload Your Resume</h2>
@@ -122,13 +146,9 @@
       <label>LinkedIn Profile:</label>
       <input type="url" name="linkedin" placeholder="https://linkedin.com/in/yourname">
 
-      <button type="button" class="prev" onclick="showForm(2)"><== Previous</button>
+      <button type="button" class="prev" onclick="showForm(3)"><== Previous</button>
       <button type="button" class="submit" onclick="submitMultiForm()">Submit</button>
-      
-
-
     </div>
-
   </div>
 
   <div id="admin-secret" style="display: none; text-align: center; margin-top: 30px;">
