@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multi-Step Form</title>
+  <link rel="stylesheet" href="./styles/style.css" />
+  <script defer src="./script/form.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Toggle Buttons -->
+    <div class="toggle-buttons">
+      <div onclick="showForm(0)"><button>Personal</button></div>
+      <div onclick="showForm(1)"><button>Academic</button></div>
+      <div onclick="showForm(2)"><button>Skills</button></div>
+      <div onclick="showForm(3)"><button>Upload Resume</button></div>
+    </div>
+
+    <!-- Personal Form -->
+    <div class="form-step form-personal active">
+      <h2>Your Personal Details</h2>
+      <label>First Name:</label>
+      <input type="text" name="firstName" pattern="[A-Za-z\s]+" title="Only letters allowed">
+
+      <label>Last Name:</label>
+      <input type="text" name="lastName">
+
+      <label>Email:</label>
+      <input type="email" name="email">
+
+      <label>Phone No:</label>
+      <input type="tel" name="phone" pattern="\d{10}" title="Enter 10 digit number">
+
+      <label>Address:</label>
+      <textarea rows="3" cols="40" name="address"></textarea>
+
+      <button type="button" class="next" onclick="showForm(1)">Next ==></button>
+    </div>
+
+    <!-- Academic Form -->
+    <div class="form-step form-academic">
+      <h2>Your Academic Profile</h2>
+
+      <fieldset>
+        <legend>10th</legend>
+        <label>Board:</label>
+        <select name="board10"><option>Select Board</option><option>CBSE</option><option>ICSE</option><option>MP-Board</option><option>Other</option></select>
+        <label>School:</label><input type="text" name="school10">
+        <label>Passing Year:</label><input type="month" name="passYear10">
+        <label>Percentage:</label><input type="number" name="percentage10">
+      </fieldset>
+
+      <fieldset>
+        <legend>12th</legend>
+        <label>Board:</label>
+        <select name="board12"><option>Select Board</option><option>CBSE</option><option>ICSE</option><option>MP-Board</option></select>
+        <label>School:</label><input type="text" name="school12">
+        <label>Passing Year:</label><input type="month" name="passYear12">
+        <label>Percentage:</label><input type="number" name="percentage12">
+      </fieldset>
+
+      <fieldset>
+        <legend>Graduation</legend>
+        <label>Institute:</label><input type="text" name="institute">
+        <label>University:</label><input type="text" name="university">
+        <label>Degree:</label>
+        <select name="degree"><option>Select Degree</option><option>B.Tech</option><option>M.Tech</option><option>BCA</option><option>MCA</option><option>Other</option></select>
+        <label>Branch:</label>
+        <select name="branch"><option>Select Branch</option><option>CSE</option><option>ME</option><option>EE</option><option>CE</option></select>
+        <label>Passing Year:</label><input type="month" name="passYearGrad">
+        <label>CGPA:</label><input type="number" name="cgpa">
+      </fieldset>
+
+      <button type="button" class="prev" onclick="showForm(0)"><== Previous</button>
+      <button type="button" class="next" onclick="showForm(2)">Next ==></button>
+    </div>
+
+    <!-- Skills Form -->
+    <div class="form-step form-skills">
+      <h2>Your Skills</h2>
+
+      <label>Domain:</label>
+      <select name="domain">
+        <option>Select Domain</option>
+        <option>Web Development</option>
+        <option>App Development</option>
+        <option>UI/UX Design</option>
+        <option>Data Science</option>
+        <option>Cybersecurity</option>
+      </select>
+
+      <label>Skills:</label>
+      <select name="skills" multiple size="3">
+        <option>HTML</option>
+        <option>CSS</option>
+        <option>JavaScript</option>
+        <option>React</option>
+        <option>Python</option>
+        <option>SQL</option>
+        <option>Java</option>
+      </select>
+
+      <label>Certifications:</label>
+      <textarea rows="4" cols="40" name="certifications" placeholder="Mention any technical certifications you have..."></textarea>
+
+      <button type="button" class="prev" onclick="showForm(1)"><== Previous</button>
+      <button type="button" class="next" onclick="showForm(3)">Next ==></button>
+    </div>
+
+    <!-- Upload Resume Form -->
+    <div class="form-step form-upload">
+      <h2>Upload Your Resume</h2>
+
+      <label>Upload Resume (PDF/DOCX):</label>
+      <input type="file" name="resume" accept=".pdf, .doc, .docx">
+
+      <label>Portfolio Website (if any):</label>
+      <input type="url" name="portfolio" placeholder="https://yourportfolio.com">
+
+      <label>LinkedIn Profile:</label>
+      <input type="url" name="linkedin" placeholder="https://linkedin.com/in/yourname">
+
+      <button type="button" class="prev" onclick="showForm(2)"><== Previous</button>
+      <button type="button" class="submit" onclick="submitMultiForm()">Submit</button>
+      
+
+
+    </div>
+
+  </div>
+
+  <div id="admin-secret" style="display: none; text-align: center; margin-top: 30px;">
+  <a href="api/admin/login" id="admin-btn">🔒 Admin Panel</a>
+  </div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/styles/admin.css">
+</head>
+<body>
+  <h1>All Submitted Resumes</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>10th %</th>
+      <th>12th %</th>
+      <th>CGPA</th>
+      <th>Domain</th>
+      <th>Skills</th>
+      <th>Resume</th>
+      <th>Submitted At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% students.forEach(student => { %>
+      <tr>
+        <td><%= student.firstName %> <%= student.lastName %></td>
+        <td><%= student.email %></td>
+        <td><%= student.phone %></td>
+        <td><%= student.percentage10 %></td>
+        <td><%= student.percentage12 %></td>
+        <td><%= student.cgpa %></td>
+        <td><%= student.domain %></td>
+        <td><%= student.skills.join(", ") %></td>
+        <td>
+          <% if (student.resumeFileName) { %>
+            <a href="/uploads/<%= student.resumeFileName %>" target="_blank">Download</a>
+          <% } else { %>
+            N/A
+          <% } %>
+        </td>
+        <td><%= new Date(student.createdAt).toLocaleString() %></td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+</body>
+</html>
