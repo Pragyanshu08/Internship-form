@@ -56,7 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Add Section
+// Add input section on the project
 let add = document.querySelector(".add");
 
 add.addEventListener("click", function (e) {
@@ -90,6 +90,36 @@ add.addEventListener("click", function (e) {
 });
 
 
+// Add project container 
+const projectContainer = document.getElementById("project-section-container");
+const addProjectBtn = document.getElementById("add-project-btn");
+let projectCount = 1;
+let i=2;
+
+addProjectBtn.addEventListener("click", () => {
+  const section = document.createElement("div");
+  section.className = "project-section contains";
+
+  section.innerHTML = `
+    <label>Project Name ${i}</label>
+    <input type="text" name="project_name${projectCount}">
+
+    <label for="desc">Description</label>
+    <textarea name="desc${projectCount}" rows="3" cols="40"></textarea>
+
+    <label>Developer's role</label>
+    <textarea name="role${projectCount}" rows="3" cols="40"></textarea>
+
+    <label>Technology used</label>
+    <div class="newInput">
+      <span><input type="text" name="tech_uses${projectCount}"></span>
+    </div>
+  `;
+
+  projectContainer.appendChild(section);
+  projectCount++
+  i++;
+});
 
 
 
@@ -133,10 +163,6 @@ async function submitMultiForm() {
 
 
 //admin secret button reveal code
-
-
-
-
 const konamiCode = [
   "ArrowUp", "ArrowUp",
   "ArrowDown", "ArrowDown",
@@ -165,3 +191,50 @@ window.addEventListener("keydown", (e) => {
     enteredKeys = []; // reset
   }
 });
+
+// adding the new edu-box 
+  const academicContainer = document.getElementById("academic-section-container");
+  const addAcademicBtn = document.getElementById("add-academic-btn");
+
+  let academicCount = 1;
+
+  addAcademicBtn.addEventListener("click", () => {
+    const newSection = document.createElement("div");
+    newSection.className = "academic-section contains";
+
+    newSection.innerHTML = `
+      <label>Level of Education:</label>
+      <select name="education${academicCount}">
+        <option>Select Education</option>
+        <option>10th</option>
+        <option>12th</option>
+        <option>Diploma</option>
+        <option>Graduation</option>
+        <option>Post-Graduation</option>
+        <option>Other</option>
+      </select>
+
+      <label>Board/University:</label>
+      <select name="board-university${academicCount}">
+        <option>Select Board/University</option>
+        <option>CBSE</option>
+        <option>ICSE</option>
+        <option>MP-Board</option>
+        <option>Other</option>
+      </select>
+
+      <label>School/Institute:</label>
+      <input type="text" name="school-institute${academicCount}">
+
+      <label>Passing Year:</label>
+      <input type="month" name="passYear${academicCount}">
+
+      <label>Percentage:</label>
+      <input type="number" name="percentage${academicCount}">
+    `;
+
+    academicContainer.appendChild(newSection);
+    academicCount++;
+  });
+
+

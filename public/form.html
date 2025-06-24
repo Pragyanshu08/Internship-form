@@ -37,46 +37,53 @@
       <label>Address:</label>
       <textarea rows="3" cols="40" name="address"></textarea>
 
-      <button type="button" class="next" onclick="showForm(1)">Next ==></button>
+      <button type="button" class="next" onclick="showForm(1)">Next >></button>
     </div>
 
     <!-- Academic Form -->
     <div class="form-step form-academic">
       <h2>Your Academic Profile</h2>
 
-      <fieldset>
-        <legend>10th</legend>
-        <label>Board:</label>
-        <select name="board10"><option>Select Board</option><option>CBSE</option><option>ICSE</option><option>MP-Board</option><option>Other</option></select>
-        <label>School:</label><input type="text" name="school10">
-        <label>Passing Year:</label><input type="month" name="passYear10">
-        <label>Percentage:</label><input type="number" name="percentage10">
-      </fieldset>
+      <div id="academic-section-container">
+        <div class="academic-section contains">
+          <label>Level of Education:</label>
+          <select name="education0">
+            <option>Select Education</option>
+            <option>10th</option>
+            <option>12th</option>
+            <option>Diploma</option>
+            <option>Graduation</option>
+            <option>Post-Graduation</option>
+            <option>Other</option>
+          </select>
 
-      <fieldset>
-        <legend>12th</legend>
-        <label>Board:</label>
-        <select name="board12"><option>Select Board</option><option>CBSE</option><option>ICSE</option><option>MP-Board</option></select>
-        <label>School:</label><input type="text" name="school12">
-        <label>Passing Year:</label><input type="month" name="passYear12">
-        <label>Percentage:</label><input type="number" name="percentage12">
-      </fieldset>
+          <label>Board/University:</label>
+          <select name="board-university0">
+            <option>Select Board/University</option>
+            <option>CBSE</option>
+            <option>ICSE</option>
+            <option>MP-Board</option>
+            <option>Other</option>
+          </select>
 
-      <fieldset>
-        <legend>Graduation</legend>
-        <label>Institute:</label><input type="text" name="institute">
-        <label>University:</label><input type="text" name="university">
-        <label>Degree:</label>
-        <select name="degree"><option>Select Degree</option><option>B.Tech</option><option>M.Tech</option><option>BCA</option><option>MCA</option><option>Other</option></select>
-        <label>Branch:</label>
-        <select name="branch"><option>Select Branch</option><option>CSE</option><option>ME</option><option>EE</option><option>CE</option></select>
-        <label>Passing Year:</label><input type="month" name="passYearGrad">
-        <label>CGPA:</label><input type="number" name="cgpa">
-      </fieldset>
+          <label>School/Institute:</label>
+          <input type="text" name="school-institute0">
 
-      <button type="button" class="prev" onclick="showForm(0)"><== Previous</button>
-      <button type="button" class="next" onclick="showForm(2)">Next ==></button>
+          <label>Passing Year:</label>
+          <input type="month" name="passYear0">
+
+          <label>Percentage:</label>
+          <input type="number" name="percentage0">
+        </div>
+      </div>
+
+      <button type="button" class="prev" onclick="showForm(0)"><< Previous</button>
+      <button type="button" class="next" onclick="showForm(2)">Next >></button>
+
+      <button type="button" class="new" id="add-academic-btn">+ Add More</button>
+
     </div>
+
 
     <!-- Skills Form -->
     <div class="form-step form-skills">
@@ -106,32 +113,40 @@
       <label>Certifications:</label>
       <textarea rows="4" cols="40" name="certifications" placeholder="Mention any technical certifications you have..."></textarea>
 
-      <button type="button" class="prev" onclick="showForm(1)"><== Previous</button>
-      <button type="button" class="next" onclick="showForm(3)">Next ==></button>
+      <button type="button" class="prev" onclick="showForm(1)"><< Previous</button>
+      <button type="button" class="next" onclick="showForm(3)">Next >></button>
     </div>
 
     <!-- Project Form  -->
-     <div class="form-step form-project">
+    <div class="form-step form-project">
       <h2>Your Projects</h2>
 
-      <label>Project Name</label>
-      <input type="text" name="project_name">
+      <div id="project-section-container">
+        <div class="contains">
+          <label>Project Name 1</label>
+          <input type="text" name="project_name">
 
-      <label for="desc">Description</label>
-      <textarea name="desc" id="desc" rows="3" cols="40"></textarea>
+          <label for="desc">Description</label>
+          <textarea name="desc" id="desc" rows="3" cols="40"></textarea>
 
-      <label>Developer's role</label>
-      <textarea name="role" rows="3" cols="40"></textarea>
+          <label>Developer's role</label>
+          <textarea name="role" rows="3" cols="40"></textarea>
 
-      <label>Technology used</label>
-      <div class="newInput">
-        <span><input type="text" name="tech_uses"><button class="add" id="1">+</button></span>
+          <label>Technology used</label>
+          <div class="newInput">
+            <span><input type="text" name="tech_uses"><button class="add" id="1">+</button></span>
+          </div>
+        </div>
       </div>
 
-      <button type="button" class="prev" onclick="showForm(2)"><== Previous</button>
-      <button type="button" class="next" onclick="showForm(4)">Next ==></button>
-     </div>
+      <button type="button" class="prev" onclick="showForm(2)"><< Previous</button>
+      <button type="button" class="next" onclick="showForm(4)">Next >></button>
 
+      <button type="button" class="new" id="add-project-btn">+ Add More</button>
+
+    </div>
+
+    
 
     <!-- Upload Resume Form -->
     <div class="form-step form-upload">
@@ -146,13 +161,13 @@
       <label>LinkedIn Profile:</label>
       <input type="url" name="linkedin" placeholder="https://linkedin.com/in/yourname">
 
-      <button type="button" class="prev" onclick="showForm(3)"><== Previous</button>
-      <button type="button" class="submit" onclick="submitMultiForm()">Submit</button>
+      <button type="button" class="prev" onclick="showForm(3)"><< Previous</button>
+      <button type="button" class="submit" onclick="submitMultiForm()">Submit !</button>
     </div>
   </div>
 
   <div id="admin-secret" style="display: none; text-align: center; margin-top: 30px;">
-  <a href="api/admin/login" id="admin-btn">🔒 Admin Panel</a>
+    <a href="api/admin/login" id="admin-btn">🔒 Admin Panel</a>
   </div>
 
 
