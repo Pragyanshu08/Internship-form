@@ -9,33 +9,32 @@
 </head>
 <body>
   <div class="container">
-
     <!-- Toggle Buttons -->
     <div class="toggle-buttons">
-      <div onclick="showForm(0)"><button>Personal</button></div>
-      <div onclick="showForm(1)"><button>Academic</button></div>
-      <div onclick="showForm(2)"><button>Skills</button></div>
-      <div onclick="showForm(3)"><button>Projects</button></div>
-      <div onclick="showForm(4)"><button>Upload Resume</button></div>
+      <div><button class="first-toggle">Personal</button></div>
+      <div><button>Academic</button></div>
+      <div><button>Skills</button></div>
+      <div><button>Projects</button></div>
+      <div><button>Upload Resume</button></div>
     </div>
 
     <!-- Personal Form -->
     <div class="form-step form-personal active">
       <h2>Your Personal Details</h2>
       <label>First Name:</label>
-      <input type="text" name="firstName" pattern="[A-Za-z\s]+" title="Only letters allowed">
+      <input type="text" name="firstName" pattern="[A-Za-z\s]+" title="Only letters allowed" required>
 
       <label>Last Name:</label>
-      <input type="text" name="lastName">
+      <input type="text" name="lastName" >
 
       <label>Email:</label>
-      <input type="email" name="email">
+      <input type="email" name="email" required>
 
       <label>Phone No:</label>
-      <input type="tel" name="phone" pattern="\d{10}" title="Enter 10 digit number">
+      <input type="tel" name="phone" pattern="\d{10}" title="Enter 10 digit number" required>
 
       <label>Address:</label>
-      <textarea rows="3" cols="40" name="address"></textarea>
+      <textarea rows="3" cols="40" name="address" required></textarea>
 
       <button type="button" class="next" onclick="showForm(1)">Next >></button>
     </div>
@@ -47,33 +46,27 @@
       <div id="academic-section-container">
         <div class="academic-section contains">
           <label>Level of Education:</label>
-          <select name="education0">
-            <option>Select Education</option>
-            <option>10th</option>
-            <option>12th</option>
-            <option>Diploma</option>
-            <option>Graduation</option>
-            <option>Post-Graduation</option>
-            <option>Other</option>
-          </select>
+          <select name="education0" required>
+            <option value="">Select Education</option>
+            <option value="10th">10th</option>
+            <option value="12th">12th</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Graduation">Graduation</option>
+            <option value="Post-Graduation">Post-Graduation</option>
+            <option value="Other">Other</option>
+          </select> 
 
           <label>Board/University:</label>
-          <select name="board-university0">
-            <option>Select Board/University</option>
-            <option>CBSE</option>
-            <option>ICSE</option>
-            <option>MP-Board</option>
-            <option>Other</option>
-          </select>
+          <input type="text" name="board-university" required>
 
           <label>School/Institute:</label>
-          <input type="text" name="school-institute0">
+          <input type="text" name="school-institute" required>
 
           <label>Passing Year:</label>
-          <input type="month" name="passYear0">
+          <input type="month" name="passYear">
 
-          <label>Percentage:</label>
-          <input type="number" name="percentage0">
+          <label>Percentage/CGPA:</label>
+          <input type="number" name="percentage">
         </div>
       </div>
 
@@ -100,15 +93,13 @@
       </select>
 
       <label>Skills:</label>
-      <select name="skills" multiple size="3">
-        <option>HTML</option>
-        <option>CSS</option>
-        <option>JavaScript</option>
-        <option>React</option>
-        <option>Python</option>
-        <option>SQL</option>
-        <option>Java</option>
-      </select>
+      <div class="multi-select" id="multiSelect" required>
+        <div class="selected-items" id="selectedItems"></div>
+        <input type="text" id="inputBox" placeholder="Select or type new option...">
+        <div class="options" id="optionsList">
+          <!-- Options will be populated dynamically -->
+        </div>
+      </div>
 
       <label>Certifications:</label>
       <textarea rows="4" cols="40" name="certifications" placeholder="Mention any technical certifications you have..."></textarea>
@@ -124,18 +115,21 @@
       <div id="project-section-container">
         <div class="contains">
           <label>Project Name 1</label>
-          <input type="text" name="project_name">
+          <input type="text" name="project_name" required>
 
           <label for="desc">Description</label>
-          <textarea name="desc" id="desc" rows="3" cols="40"></textarea>
+          <textarea name="desc" id="desc" rows="1" cols="40" required></textarea>
 
           <label>Developer's role</label>
-          <textarea name="role" rows="3" cols="40"></textarea>
+          <textarea name="role" rows="1" cols="40"></textarea>
 
           <label>Technology used</label>
           <div class="newInput">
             <span><input type="text" name="tech_uses"><button class="add" id="1">+</button></span>
           </div>
+
+          <label style="margin-top: -.8rem ">Project Link</label>
+          <input type="url" name="project_link" required>
         </div>
       </div>
 
@@ -153,7 +147,7 @@
       <h2>Upload Your Resume</h2>
 
       <label>Upload Resume (PDF/DOCX):</label>
-      <input type="file" name="resume" accept=".pdf, .doc, .docx">
+      <input type="file" name="resume" accept=".pdf, .doc, .docx" required>
 
       <label>Portfolio Website (if any):</label>
       <input type="url" name="portfolio" placeholder="https://yourportfolio.com">

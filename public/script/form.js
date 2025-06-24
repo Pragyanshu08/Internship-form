@@ -1,3 +1,4 @@
+//toggling
 function showForm(index) {
   const forms = document.querySelectorAll('.form-step');
   const buttons = document.querySelectorAll('.toggle-buttons button');
@@ -7,6 +8,35 @@ function showForm(index) {
     buttons[i].classList.toggle('active', i === index);
   });
 }
+
+
+//required validation
+function showForm(index) {
+  const allForms = document.querySelectorAll(".form-step");
+  const currentForm = document.querySelector(".form-step.active");
+
+  if (index > [...allForms].indexOf(currentForm)) {
+    const inputs = currentForm.querySelectorAll("input, select, textarea");
+    for (let input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity(); 
+        return; 
+      }
+    }
+  }
+  allForms.forEach(form => form.classList.remove("active"));
+  allForms[index].classList.add("active");
+}
+
+
+//first toggle glow & remove
+let first_toggle = document.querySelector(".first-toggle");
+let first_btn= document.querySelector(".next");
+console.log(first_toggle)
+first_btn.addEventListener("click",function(){
+  first_toggle.classList.remove("first-toggle");
+})
+
 
 // Load & auto-fill localStorage values
 window.addEventListener('DOMContentLoaded', () => {
@@ -114,6 +144,9 @@ addProjectBtn.addEventListener("click", () => {
     <div class="newInput">
       <span><input type="text" name="tech_uses${projectCount}"></span>
     </div>
+
+    <label>Project Link</label>
+    <input type="url" name="project_link${projectCount}">
   `;
 
   projectContainer.appendChild(section);
@@ -192,6 +225,7 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
+
 // adding the new edu-box 
   const academicContainer = document.getElementById("academic-section-container");
   const addAcademicBtn = document.getElementById("add-academic-btn");
@@ -229,7 +263,7 @@ window.addEventListener("keydown", (e) => {
       <label>Passing Year:</label>
       <input type="month" name="passYear${academicCount}">
 
-      <label>Percentage:</label>
+      <label>Percentage/CGPA:</label>
       <input type="number" name="percentage${academicCount}">
     `;
 
@@ -238,3 +272,80 @@ window.addEventListener("keydown", (e) => {
   });
 
 
+
+// multiselect form
+
+  let options = ["JavaScript", "HTML", "CSS", "React", "Node.js", "Python", "Java", "C++"];
+  const inputBox = document.getElementById("inputBox");
+  const optionsList = document.getElementById("optionsList");
+  const selectedItems = document.getElementById("selectedItems");
+
+  let selected = [];
+
+  function updateOptions(filter = "") {
+    optionsList.innerHTML = "";
+
+    options
+      .filter(item => item.toLowerCase().includes(filter.toLowerCase()) && !selected.includes(item))
+      .forEach(option => {
+        const div = document.createElement("div");
+        div.textContent = option;
+        div.onclick = () => {
+          selected.push(option);
+          renderSelected();
+          inputBox.value = "";
+          updateOptions("");
+        };
+        optionsList.appendChild(div);
+      });
+  }
+
+  function renderSelected() {
+    selectedItems.innerHTML = "";
+    selected.forEach(item => {
+      const span = document.createElement("span");
+      span.textContent = item;
+      const close = document.createElement("i");
+      close.textContent = "✕";
+      close.onclick = () => {
+        selected = selected.filter(i => i !== item);
+        renderSelected();
+        updateOptions(inputBox.value);
+      };
+      span.appendChild(close);
+      selectedItems.appendChild(span);
+    });
+  }
+
+  inputBox.addEventListener("focus", () => {
+    optionsList.classList.add("active");
+    updateOptions(inputBox.value);
+  });
+
+  inputBox.addEventListener("input", () => {
+    updateOptions(inputBox.value);
+  });
+
+  inputBox.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const value = inputBox.value.trim();
+      if (value && !selected.includes(value)) {
+        selected.push(value);
+        if (!options.includes(value)) {
+          options.push(value); // Add to global options too
+        }
+        renderSelected();
+        inputBox.value = "";
+        updateOptions("");
+      }
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!document.getElementById("multiSelect").contains(e.target)) {
+      optionsList.classList.remove("active");
+    }
+  });
+
+  updateOptions();
