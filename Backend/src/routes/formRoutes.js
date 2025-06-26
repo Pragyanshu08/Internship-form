@@ -8,6 +8,16 @@ const ResumeForm = require(path.join(__dirname, '..', '..', 'model', 'ResumeForm
 
 // POST /api/submit      //!api/submit
 router.post('/submit', upload.single('resume'), async (req, res) => {
+
+  if (typeof req.body.skills === 'string') {
+  try {
+    req.body.skills = JSON.parse(req.body.skills);
+  } catch (e) {
+    console.error('❌ Failed to parse skills:', e);
+    req.body.skills = [];
+  }
+}
+
   const result = resumeFormValidation.safeParse(req.body);
 
   if (!result.success) {
@@ -25,7 +35,7 @@ router.post('/submit', upload.single('resume'), async (req, res) => {
 
   const resumeData = new ResumeForm({
     ...data,
-    skills: JSON.parse(data.skills),
+    skills: data.skills,
     resumeFileName: req.file?.filename || null
   });
 

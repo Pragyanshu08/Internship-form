@@ -1,6 +1,22 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+const academicSchema = new mongoose.Schema({
+  education: String,
+  boardUniversity: String,
+  schoolInstitute: String,
+  passYear: String,
+  percentage: String
+}, { _id: false });
+
+const projectSchema = new mongoose.Schema({
+  project_name: String,
+  desc: String,
+  role: String,
+  tech_uses: [String],
+  project_link: String
+}, { _id: false });
+
 const resumeSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -9,7 +25,7 @@ const resumeSchema = new mongoose.Schema({
   },
   lastName: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   email: {
@@ -35,31 +51,21 @@ const resumeSchema = new mongoose.Schema({
     trim: true
   },
 
-  board10: String,
-  school10: String,
-  passYear10: String,
-  percentage10: String,
+  academicDetails: [academicSchema],
 
-  board12: String,
-  school12: String,
-  passYear12: String,
-  percentage12: String,
-
-  institute: String,
-  university: String,
-  degree: String,
-  branch: String,
-  passYearGrad: String,
-  cgpa: {
-    type: Number,
-    min: 0,
-    max: 10
+  domain: {
+    type: String,
+    enum: ['Web Development', 'App Development', 'UI/UX Design', 'Data Science', 'Cybersecurity']
   },
-
-  domain: String,
-  skills: [String],
+  skills: {
+    type: [String],
+    default: []
+  },
   certifications: String,
 
+  projects: [projectSchema],
+
+  resumeFileName: String,
   portfolio: {
     type: String,
     trim: true,
@@ -75,9 +81,7 @@ const resumeSchema = new mongoose.Schema({
       validator: v => !v || validator.isURL(v),
       message: 'Invalid LinkedIn URL'
     }
-  },
-
-  resumeFileName: String
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('ResumeForm', resumeSchema);

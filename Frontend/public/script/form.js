@@ -303,6 +303,11 @@ document.addEventListener("click", (e) => {
 updateOptions();
 
 
+if (Array.isArray(selected) && selected.length > 0) {
+    formData.append('skills', JSON.stringify(selected));
+  }
+
+
 // Submit form data
 async function submitMultiForm(event) {
   if (event) event.preventDefault();
@@ -311,16 +316,24 @@ async function submitMultiForm(event) {
   const formData = new FormData();
 
   inputs.forEach(input => {
-    if (!input.name) return;
-    if (input.type === 'file' && input.files[0]) {
-      formData.append(input.name, input.files[0]);
-    } else if (input.type === 'select-multiple') {
-      const selected = Array.from(input.selectedOptions).map(opt => opt.value);
-      formData.append(input.name, JSON.stringify(selected));
-    } else {
-      formData.append(input.name, input.value);
-    }
-  });
+  if (!input.name) return;
+
+  if (input.type === 'file' && input.files[0]) {
+    formData.append(input.name, input.files[0]);
+  } else if (input.type === 'select-multiple') {
+    const selected = Array.from(input.selectedOptions).map(opt => opt.value);
+    formData.append(input.name, JSON.stringify(selected));
+  } else {
+    formData.append(input.name, input.value);
+  }
+});
+
+// ✅ Add `skills` from localStorage manually
+const saved = JSON.parse(localStorage.getItem("multiStepForm") || "{}");
+if (saved.skills && Array.isArray(saved.skills)) {
+  formData.append("skills", JSON.stringify(saved.skills));
+}
+
 
   try {
     const res = await fetch('http://localhost:3000/api/submit', {
