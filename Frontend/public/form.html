@@ -40,39 +40,41 @@
     </div>
 
     <!-- Academic Form -->
-    <div class="form-step">
-      <h2>Your Academic Profile</h2>
-      <div id="academic-section-container">
-        <div class="academic-section contains">
-          <label>Level of Education:</label>
-          <select name="education0" required>
-            <option value="">Select Education</option>
-            <option value="10th">10th</option>
-            <option value="12th">12th</option>
-            <option value="Diploma">Diploma</option>
-            <option value="Graduation">Graduation</option>
-            <option value="Post-Graduation">Post-Graduation</option>
-            <option value="Other">Other</option>
-          </select> 
+    <!-- Academic Form -->
+<div class="form-step">
+  <h2>Your Academic Profile</h2>
+  <div id="academic-section-container">
+    <div class="academic-section contains">
+      <label>Level of Education:</label>
+      <select name="education0" required>
+        <option value="">Select Education</option>
+        <option value="10th">10th</option>
+        <option value="12th">12th</option>
+        <option value="Diploma">Diploma</option>
+        <option value="Graduation">Graduation</option>
+        <option value="Post-Graduation">Post-Graduation</option>
+        <option value="Other">Other</option>
+      </select> 
 
-          <label>Board/University:</label>
-          <input type="text" name="board-university" required>
+      <label>Board/University:</label>
+      <input type="text" name="board-university0" required>
 
-          <label>School/Institute:</label>
-          <input type="text" name="school-institute" required>
+      <label>School/Institute:</label>
+      <input type="text" name="school-institute0" required>
 
-          <label>Passing Year:</label>
-          <input type="month" name="passYear">
+      <label>Passing Year:</label>
+      <input type="month" name="passYear0">
 
-          <label>Percentage/CGPA:</label>
-          <input type="number" name="percentage">
-        </div>
-      </div>
-
-      <button type="button" class="prev" onclick="showForm(0)"><< Previous</button>
-      <button type="button" class="next" onclick="showForm(2)">Next >></button>
-      <button type="button" class="new" id="add-academic-btn">+ Add More</button>
+      <label>Percentage/CGPA:</label>
+      <input type="number" name="percentage0">
     </div>
+  </div>
+
+  <button type="button" class="prev" onclick="showForm(0)"><< Previous</button>
+  <button type="button" class="next" onclick="showForm(2)">Next >></button>
+  <button type="button" class="new" id="add-academic-btn">+ Add More</button>
+</div>
+
 
     <!-- Skills Form -->
     <div class="form-step">
@@ -151,10 +153,6 @@
       <button type="button" class="prev" onclick="showForm(3)"><< Previous</button>
       <button type="button" class="submit" onclick="submitMultiForm(event)">Submit !</button>
     </div>
-  </div>
-
-  <div id="admin-secret" style="text-align: center; margin-top: 30px;">
-    <a href="api/admin/login" id="admin-btn">🔒 Admin Panel</a>
   </div>
 </body>
 </html>
