@@ -6,7 +6,7 @@ const FILE_TYPES = ['.pdf', '.doc', '.docx'];
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '..', 'uploads')); // Ensure this directory exists
+    cb(null, path.join(__dirname, '..', '..' ,'frontend','uploads')); // Ensure this directory exists
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
