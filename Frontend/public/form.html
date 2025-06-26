@@ -11,15 +11,15 @@
   <div class="container">
     <!-- Toggle Buttons -->
     <div class="toggle-buttons">
-      <div><button class="first-toggle">Personal</button></div>
-      <div><button>Academic</button></div>
-      <div><button>Skills</button></div>
-      <div><button>Projects</button></div>
-      <div><button>Upload Resume</button></div>
+      <div><button class="form-tab" onclick="showForm(0)">Personal</button></div>
+      <div><button class="form-tab" onclick="showForm(1)">Academic</button></div>
+      <div><button class="form-tab" onclick="showForm(2)">Skills</button></div>
+      <div><button class="form-tab" onclick="showForm(3)">Projects</button></div>
+      <div><button class="form-tab" onclick="showForm(4)">Upload Resume</button></div>
     </div>
 
     <!-- Personal Form -->
-    <div class="form-step form-personal active">
+    <div class="form-step active">
       <h2>Your Personal Details</h2>
       <label>First Name:</label>
       <input type="text" name="firstName" pattern="[A-Za-z\s]+" title="Only letters allowed" required>
@@ -40,9 +40,8 @@
     </div>
 
     <!-- Academic Form -->
-    <div class="form-step form-academic">
+    <div class="form-step">
       <h2>Your Academic Profile</h2>
-
       <div id="academic-section-container">
         <div class="academic-section contains">
           <label>Level of Education:</label>
@@ -72,14 +71,11 @@
 
       <button type="button" class="prev" onclick="showForm(0)"><< Previous</button>
       <button type="button" class="next" onclick="showForm(2)">Next >></button>
-
       <button type="button" class="new" id="add-academic-btn">+ Add More</button>
-
     </div>
 
-
     <!-- Skills Form -->
-    <div class="form-step form-skills">
+    <div class="form-step">
       <h2>Your Skills</h2>
 
       <label>Domain:</label>
@@ -109,7 +105,7 @@
     </div>
 
     <!-- Project Form  -->
-    <div class="form-step form-project">
+    <div class="form-step">
       <h2>Your Projects</h2>
 
       <div id="project-section-container">
@@ -137,13 +133,10 @@
       <button type="button" class="next" onclick="showForm(4)">Next >></button>
 
       <button type="button" class="new" id="add-project-btn">+ Add More</button>
-
     </div>
 
-    
-
     <!-- Upload Resume Form -->
-    <div class="form-step form-upload">
+    <div class="form-step">
       <h2>Upload Your Resume</h2>
 
       <label>Upload Resume (PDF/DOCX):</label>
@@ -156,16 +149,12 @@
       <input type="url" name="linkedin" placeholder="https://linkedin.com/in/yourname">
 
       <button type="button" class="prev" onclick="showForm(3)"><< Previous</button>
-      <button type="button" class="submit" onclick="submitMultiForm()">Submit !</button>
+      <button type="button" class="submit" onclick="submitMultiForm(event)">Submit !</button>
     </div>
   </div>
 
   <div id="admin-secret" style="text-align: center; margin-top: 30px;">
-  <a href="api/admin/login" id="admin-btn">🔒 Admin Panel</a>
+    <a href="api/admin/login" id="admin-btn">🔒 Admin Panel</a>
   </div>
-
-
-
-
 </body>
 </html>

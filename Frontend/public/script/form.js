@@ -1,15 +1,13 @@
-//toggling
+// Toggle between form steps
 function showForm(index) {
   const forms = document.querySelectorAll('.form-step');
-  const buttons = document.querySelectorAll('.toggle-buttons button');
+  const buttons = document.querySelectorAll('.form-tab');
 
   forms.forEach((form, i) => {
     form.classList.toggle('active', i === index);
     buttons[i].classList.toggle('active', i === index);
   });
 }
-
-
 
 // Load & auto-fill localStorage values
 window.addEventListener('DOMContentLoaded', () => {
@@ -18,7 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   inputs.forEach(input => {
     const name = input.name;
-    if (!name) return; // skip unnamed inputs
+    if (!name) return;
 
     // Prefill values if saved
     if (savedData.hasOwnProperty(name)) {
@@ -28,12 +26,10 @@ window.addEventListener('DOMContentLoaded', () => {
         input.checked = savedData[name];
       } else if (input.type === 'select-multiple') {
         let selected = savedData[name];
-        if (typeof selected === 'string') {
-          try {
-            selected = JSON.parse(selected);
-          } catch {
-            selected = [];
-          }
+        try {
+          selected = JSON.parse(selected);
+        } catch {
+          selected = [];
         }
         if (!Array.isArray(selected)) selected = [];
 
@@ -45,11 +41,10 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Always attach input listener
+    // Attach input listener
     input.addEventListener('input', () => {
-      console.log(`📦 Saving ${input.name}:`, input.value);
-
       const formData = JSON.parse(localStorage.getItem('multiStepForm')) || {};
+
       if (input.type === 'radio') {
         formData[name] = input.value;
       } else if (input.type === 'checkbox') {
@@ -65,9 +60,10 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
 // Submit form data
-async function submitMultiForm() {
+async function submitMultiForm(event) {
+  if (event) event.preventDefault();
+
   const inputs = document.querySelectorAll('input, textarea, select');
   const formData = new FormData();
 
@@ -90,9 +86,6 @@ async function submitMultiForm() {
     });
 
     if (res.ok) {
-      // alert('Form submitted successfully!');
-      // localStorage.removeItem('multiStepForm'); // Optional
-      // location.reload();
       window.location.href = '/thankyou';
     } else {
       alert('Submission failed.');
@@ -102,6 +95,3 @@ async function submitMultiForm() {
     console.error(error);
   }
 }
-
-
-
