@@ -1,7 +1,14 @@
 // middlewares/AdminAuth.js (new version)
 module.exports = (req, res, next) => {
-  if (req.session && req.session.user) {
-    return next(); // Microsoft-authenticated
+
+  const adminEmails = ['rakesh.raikwar@thetechharvest.com'];
+
+  if (
+    req.session &&
+    req.session.user &&
+    adminEmails.includes(req.session.user.email)
+  ) {
+    return next(); // Allow only known admin emails
   }
   return res.redirect('/api/admin/login');
 };

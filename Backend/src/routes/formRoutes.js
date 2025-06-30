@@ -8,34 +8,55 @@ const ResumeForm = require(path.join(__dirname, '..', '..', 'model', 'ResumeForm
 
 // POST /api/submit      //!api/submit
 router.post('/submit', upload.single('resume'), async (req, res) => {
-
+  // 🔁 1. Parse skills
   if (typeof req.body.skills === 'string') {
-  try {
-    req.body.skills = JSON.parse(req.body.skills);
-  } catch (e) {
-    console.error('❌ Failed to parse skills:', e);
-    req.body.skills = [];
+    try {
+      req.body.skills = JSON.parse(req.body.skills);
+    } catch (e) {
+      console.error('❌ Failed to parse skills:', e);
+      req.body.skills = [];
+    }
   }
+
+  // 🔁 2. Parse academicDetails
+  if (typeof req.body.academicDetails === 'string') {
+    try {
+      req.body.academicDetails = JSON.parse(req.body.academicDetails);
+    } catch (e) {
+      console.error('❌ Failed to parse academicDetails:', e);
+      req.body.academicDetails = [];
+    }
+  }
+
+  // 🔁 3. Parse projects
+  if (typeof req.body.projects === 'string') {
+    try {
+      req.body.projects = JSON.parse(req.body.projects);
+    } catch (e) {
+      console.error('❌ Failed to parse projects:', e);
+      req.body.projects = [];
+    }
+  }
+
+  // ✅ Now validate using Zod
+  const result = resumeFormValidation.safeParse(req.body);
+  if (!result.success) {
+  console.log('❌ Validation Errors:', result.error.errors);
+  return res.status(400).json({
+    errors: result.error.errors.map(err => err.message) // ⬅️ extract messages
+  });
 }
 
-  const result = resumeFormValidation.safeParse(req.body);
-
-  if (!result.success) {
-    console.log('❌ Validation Errors:', result.error.errors);
-    return res.status(400).json({ errors: result.error.errors });
-  }
-
   const data = result.data;
-  const existingUser = await ResumeForm.findOne({ email: data.email });
 
+  const existingUser = await ResumeForm.findOne({ email: data.email });
   if (existingUser) {
     console.log('❌ Email already exists:', data.email);
-    return res.status(400).send("<h1>Email is already registered. Please use a different email.</h1>");
+    return res.status(400).send("<h1>Email already registered.</h1>");
   }
 
   const resumeData = new ResumeForm({
     ...data,
-    skills: data.skills,
     resumeFileName: req.file?.filename || null
   });
 
@@ -48,5 +69,6 @@ router.post('/submit', upload.single('resume'), async (req, res) => {
     res.status(500).send('Error saving data');
   }
 });
+
 
 module.exports = router;

@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Multi-Step Form</title>
   <link rel="stylesheet" href="./styles/style.css" />
+  <!-- Toastify CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
   <script defer src="./script/form.js"></script>
+
 </head>
 <body>
+
   <div class="container">
     <!-- Toggle Buttons -->
     <div class="toggle-buttons">
@@ -110,26 +115,27 @@
     <div class="form-step">
       <h2>Your Projects</h2>
 
-      <div id="project-section-container">
-        <div class="contains">
-          <label>Project Name 1</label>
-          <input type="text" name="project_name" required>
+  <div id="project-section-container">
+    <div class="project-section contains">
+     <label>Project Name 1</label>
+     <input type="text" name="project_name0" required>
 
-          <label for="desc">Description</label>
-          <textarea name="desc" id="desc" rows="1" cols="40" required></textarea>
+      <label for="desc">Description</label>
+      <textarea name="desc" id="desc0" rows="1" cols="40" required></textarea>
 
-          <label>Developer's role</label>
-          <textarea name="role" rows="1" cols="40"></textarea>
+      <label>Developer's role</label>
+      <textarea name="role0" rows="1" cols="40"></textarea>
 
-          <label>Technology used</label>
-          <div class="newInput">
-            <span><input type="text" name="tech_uses"><button class="add" id="1">+</button></span>
-          </div>
-
-          <label style="margin-top: -.8rem ">Project Link</label>
-          <input type="url" name="project_link" required>
-        </div>
+      <label>Technology used</label>
+      <div class="newInput">
+       <span><input type="text" name="tech_uses0"><button class="add" id="1">+</button></span>
       </div>
+
+      <label style="margin-top: -.8rem">Project Link</label>
+      <input type="url" name="project_link0" required>
+    </div>
+  </div>
+
 
       <button type="button" class="prev" onclick="showForm(2)"><< Previous</button>
       <button type="button" class="next" onclick="showForm(4)">Next >></button>
@@ -154,5 +160,11 @@
       <button type="button" class="submit" onclick="submitMultiForm(event)">Submit !</button>
     </div>
   </div>
+
+
+
+  <!-- Toastify JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </body>
 </html>

@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const academicContainer = document.getElementById("academic-section-container");
 
   // Step 1: Create all academic sections based on savedData
-  let academicIndex = 0;
+  let academicIndex = 1;
   while (savedData[`education${academicIndex}`]) {
     if (academicIndex > 0) {
       const newSection = document.createElement("div");
@@ -62,7 +62,44 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Set the academicCount for Add More button
-  academicCount = academicIndex;
+let academicCount = academicIndex;
+
+
+  const firstProjectInputs = document.querySelectorAll('#project-section-container .project-section input, #project-section-container .project-section textarea');
+   firstProjectInputs.forEach(input => {
+   const name = input.name;
+   if (savedData.hasOwnProperty(name)) {
+     input.value = savedData[name];
+   }
+  });
+
+   let projectIndex = 1;
+  while (savedData[`project_name${projectIndex}`]) {
+    const section = document.createElement("div");
+    section.className = "project-section contains";
+    section.innerHTML = `
+      <label>Project Name ${projectIndex}</label>
+      <input type="text" name="project_name${projectIndex}">
+
+      <label>Description</label>
+      <textarea name="desc${projectIndex}" rows="3" cols="40"></textarea>
+
+      <label>Developer's role</label>
+      <textarea name="role${projectIndex}" rows="3" cols="40"></textarea>
+
+      <label>Technology used</label>
+      <div class="newInput">
+        <span><input type="text" name="tech_uses${projectIndex}"></span>
+      </div>
+
+      <label>Project Link</label>
+      <input type="url" name="project_link${projectIndex}">
+    `;
+    projectContainer.appendChild(section);
+    projectIndex++;
+  }
+  let projectCount = projectIndex;
+
 
   // Step 2: Fill all inputs and add listeners
   const allInputs = document.querySelectorAll('input, select, textarea');
@@ -105,6 +142,11 @@ window.addEventListener('DOMContentLoaded', () => {
     selected = savedData.skills;
     renderSelected();
   }
+
+  
+  window.academicCount = academicCount;
+  window.projectCount = projectCount;
+
 });
 
 
@@ -139,32 +181,43 @@ add.addEventListener("click", function (e) {
 
 
 // Add new project section
-document.getElementById("add-project-btn").addEventListener("click", () => {
-  const projectContainer = document.getElementById("project-section-container");
+const projectBtn = document.getElementById("add-project-btn");
+projectBtn.addEventListener("click", () => {
+  const container = document.getElementById("project-section-container");
   const section = document.createElement("div");
   section.className = "project-section contains";
-
   section.innerHTML = `
-    <label>Project Name</label>
-    <input type="text" name="project_name">
+    <label>Project Name ${window.projectCount}</label>
+    <input type="text" name="project_name${window.projectCount}">
 
     <label>Description</label>
-    <textarea name="desc" rows="3" cols="40"></textarea>
+    <textarea name="desc${window.projectCount}" rows="3" cols="40"></textarea>
 
     <label>Developer's role</label>
-    <textarea name="role" rows="3" cols="40"></textarea>
+    <textarea name="role${window.projectCount}" rows="3" cols="40"></textarea>
 
     <label>Technology used</label>
     <div class="newInput">
-      <span><input type="text" name="tech_uses"></span>
+      <span><input type="text" name="tech_uses${window.projectCount}"></span>
     </div>
 
     <label>Project Link</label>
-    <input type="url" name="project_link">
+    <input type="url" name="project_link${window.projectCount}">
   `;
+  container.appendChild(section);
 
-  projectContainer.appendChild(section);
+  // Save to localStorage on input
+  section.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('input', () => {
+      const formData = JSON.parse(localStorage.getItem('multiStepForm')) || {};
+      formData[input.name] = input.value;
+      localStorage.setItem('multiStepForm', JSON.stringify(formData));
+    });
+  });
+
+  window.projectCount++;
 });
+
 
 
 // Add academic section
@@ -312,21 +365,59 @@ if (Array.isArray(selected) && selected.length > 0) {
 async function submitMultiForm(event) {
   if (event) event.preventDefault();
 
-  const inputs = document.querySelectorAll('input, textarea, select');
   const formData = new FormData();
 
-  inputs.forEach(input => {
-  if (!input.name) return;
+// Send flat fields
+document.querySelectorAll('input, textarea, select').forEach(input => {
+  if (!input.name || input.closest('.academic-section') || input.closest('.project-section')) return;
 
   if (input.type === 'file' && input.files[0]) {
     formData.append(input.name, input.files[0]);
-  } else if (input.type === 'select-multiple') {
-    const selected = Array.from(input.selectedOptions).map(opt => opt.value);
-    formData.append(input.name, JSON.stringify(selected));
   } else {
     formData.append(input.name, input.value);
   }
 });
+
+// Collect academic details
+const academicSections = document.querySelectorAll('.academic-section');
+const academicDetails = [];
+
+academicSections.forEach((section, index) => {
+  const education = section.querySelector(`select[name^="education"]`)?.value || "";
+  const boardUniversity = section.querySelector(`input[name^="board-university"]`)?.value || "";
+  const schoolInstitute = section.querySelector(`input[name^="school-institute"]`)?.value || "";
+  const passYear = section.querySelector(`input[name^="passYear"]`)?.value || "";
+  const percentage = section.querySelector(`input[name^="percentage"]`)?.value || "";
+
+  if (education) {
+    academicDetails.push({ education, boardUniversity, schoolInstitute, passYear, percentage });
+  }
+});
+
+formData.append("academicDetails", JSON.stringify(academicDetails));
+
+
+// Collect projects
+const projectSections = document.querySelectorAll('.project-section');
+const projects = [];
+
+projectSections.forEach(section => {
+  const project_name = section.querySelector('input[name^="project_name"]')?.value || "";
+  const desc = section.querySelector('textarea[name^="desc"]')?.value || "";
+  const role = section.querySelector('textarea[name^="role"]')?.value || "";
+  const project_link = section.querySelector('input[name^="project_link"]')?.value || "";
+
+  const tech_uses = Array.from(section.querySelectorAll('input[name^="tech_uses"]'))
+    .map(input => input.value.trim())
+    .filter(Boolean);
+
+  if (project_name) {
+    projects.push({ project_name, desc, role, project_link, tech_uses });
+  }
+});
+
+formData.append("projects", JSON.stringify(projects));
+
 
 // ✅ Add `skills` from localStorage manually
 const saved = JSON.parse(localStorage.getItem("multiStepForm") || "{}");
@@ -335,14 +426,13 @@ if (saved.skills && Array.isArray(saved.skills)) {
 }
 
 
-  try {
+try {
     const res = await fetch('http://localhost:3000/api/submit', {
       method: 'POST',
       body: formData
     });
 
     if (res.ok) {
-      alert('Form submitted successfully!');
       localStorage.removeItem('multiStepForm');
       window.location.href = '/thankyou';
     } else {
@@ -353,3 +443,4 @@ if (saved.skills && Array.isArray(saved.skills)) {
     console.error(error);
   }
 }
+

@@ -25,7 +25,7 @@ app.use(session({
 
 // Static files
 app.use(express.static(path.join(__dirname, '..', '..', 'frontend', 'public')));
-app.use('/uploads', express.static(path.join(__dirname, '..', '..', 'frontend', 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, '..', '..', 'frontend', 'uploads')));
 
 // View engine setup
 app.set("view engine", "ejs");
@@ -41,6 +41,11 @@ app.use('/api/admin', adminRoutes);
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'frontend', 'public', 'form.html'));
 });
+
+//!when deployed, redirect to frontend
+// app.get("/", (req, res) => {
+//   res.redirect("https://yourfrontend.vercel.app");
+// });
 
 app.get('/thankyou', (req, res) => {
   res.render('thankyou');

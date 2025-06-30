@@ -1,50 +1,199 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="/styles/admin.css">
+  <meta charset="UTF-8" />
+  <title>Student Resume Submissions</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f9fc;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 28px;
+      color: #222;
+    }
+
+    .student-container {
+      max-width: 1000px;
+      margin: 0 auto 40px auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    }
+
+    .student-header {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .info-wrapper {
+      display: flex;
+      gap: 40px;
+      justify-content: space-between;
+    }
+
+    .left, .right {
+      flex: 1;
+    }
+
+    h3 {
+      margin-top: 25px;
+      font-size: 18px;
+      color: #0051a2;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+
+    p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li {
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: #444;
+    }
+
+    a {
+      color: #0056cc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .project {
+      margin-bottom: 20px;
+      padding-left: 10px;
+      border-left: 3px solid #ccc;
+    }
+
+    .timestamp {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #666;
+      font-style: italic;
+      text-align: right;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: #ccc;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-  <h1>All Submitted Resumes</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>10th %</th>
-      <th>12th %</th>
-      <th>CGPA</th>
-      <th>Domain</th>
-      <th>Skills</th>
-      <th>Resume</th>
-      <th>Submitted At</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% students.forEach(student => { %>
-      <tr>
-        <td><%= student.firstName %> <%= student.lastName %></td>
-        <td><%= student.email %></td>
-        <td><%= student.phone %></td>
-        <td><%= student.percentage10 %></td>
-        <td><%= student.percentage12 %></td>
-        <td><%= student.cgpa %></td>
-        <td><%= student.domain %></td>
-        <td><%= student.skills.join(", ") %></td>
-        <td>
-          <% if (student.resumeFileName) { %>
-            <a href="/uploads/<%= student.resumeFileName %>" target="_blank">Download</a>
-          <% } else { %>
-            N/A
-          <% } %>
-        </td>
-        <td><%= new Date(student.createdAt).toLocaleString() %></td>
-      </tr>
-    <% }); %>
-  </tbody>
-</table>
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+  <form action="/api/admin/logout" >
+    <button type="submit" style="
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    ">Logout</button>
+   </form>
+  </div>
+  <h1>Student Resume Submissions</h1>
 
+  <% students.forEach(student => { %>
+    <div class="student-container">
+      <div class="student-header">
+       <b> <%= student.firstName %> <%= student.lastName || '' %></b>
+      </div>
+
+      <div class="info-wrapper">
+        <div class="left">
+          <h3>Personal Info</h3>
+          <p><strong>Email:</strong> <%= student.email %></p>
+          <p><strong>Phone:</strong> <%= student.phone %></p>
+          <p><strong>Address:</strong> <%= student.address %></p>
+          <p><strong>Domain:</strong> <%= student.domain %></p>
+          <p><strong>Certifications:</strong> <%= student.certifications %></p>
+
+          <h3>Academic Details</h3>
+          <% student.academicDetails.forEach(edu => { %>
+            <div style="margin-bottom: 10px;">
+              <p><strong>Education:</strong> <%= edu.education %></p>
+              <p><strong>Board/University:</strong> <%= edu.boardUniversity %></p>
+              <p><strong>School/Institute:</strong> <%= edu.schoolInstitute %></p>
+              <p><strong>Passing Year:</strong> <%= edu.passYear %></p>
+              <p><strong>Percentage/CGPA:</strong> <%= edu.percentage %></p>
+            </div>
+          <% }) %>
+
+          <h3>Skills</h3>
+          <ul>
+            <% student.skills.forEach(skill => { %>
+              <li><%= skill %></li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <div class="right">
+          <% if (student.projects?.length > 0) { %>
+            <h3>Projects</h3>
+            <% student.projects.forEach(project => { %>
+              <div class="project">
+                <p><strong>Name:</strong> <%= project.project_name %></p>
+                <p><strong>Description:</strong> <%= project.desc %></p>
+                <p><strong>Role:</strong> <%= project.role %></p>
+                <p><strong>Technologies:</strong> <%= Array.isArray(project.tech_uses) ? project.tech_uses.join(', ') : project.tech_uses %></p>
+                <p><strong>Link:</strong> <a href="<%= project.project_link %>" target="_blank"><%= project.project_link %></a></p>
+              </div>
+            <% }) %>
+          <% } %>
+
+          <% if (student.resumeFileName) { %>
+            <p><strong>Resume:</strong> <a href="/api/admin/login/uploads/<%= student.resumeFileName %>" target="_blank">Download</a></p>
+          <% } %>
+
+          <% if (student.portfolio) { %>
+            <p><strong>Portfolio:</strong> <a href="<%= student.portfolio %>" target="_blank"><%= student.portfolio %></a></p>
+          <% } %>
+
+          <% if (student.linkedin) { %>
+            <p><strong>LinkedIn:</strong> <a href="<%= student.linkedin %>" target="_blank"><%= student.linkedin %></a></p>
+          <% } %>
+        </div>
+      </div>
+
+      <% if (student.createdAt) { 
+           const submittedAt = new Date(student.createdAt).toLocaleString('en-IN', {
+             day: '2-digit',
+             month: 'short',
+             year: 'numeric',
+             hour: '2-digit',
+             minute: '2-digit',
+             hour12: true
+           });
+      %>
+        <div class="timestamp">Submitted on: <%= submittedAt %></div>
+      <% } %>
+
+      <hr />
+    </div>
+  <% }) %>
 </body>
 </html>
