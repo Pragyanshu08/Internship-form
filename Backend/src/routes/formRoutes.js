@@ -38,6 +38,28 @@ router.post('/submit', upload.single('resume'), async (req, res) => {
     }
   }
 
+  // 🔁 4. Parse domains
+  if (typeof req.body.domains === 'string') {
+   try {
+    req.body.domains = JSON.parse(req.body.domains);
+  } catch (e) {
+    console.error('❌ Failed to parse domains:', e);
+    req.body.domains = [];
+    }
+  }
+
+  // 🔁 4. Parse experiences
+if (typeof req.body.experiences === 'string') {
+  try {
+    req.body.experiences = JSON.parse(req.body.experiences);
+  } catch (e) {
+    console.error('❌ Failed to parse experiences:', e);
+    req.body.experiences = [];
+  }
+}
+
+   req.body.resumeFileName = req.file?.filename || '';
+
   // ✅ Now validate using Zod
   const result = resumeFormValidation.safeParse(req.body);
   if (!result.success) {
@@ -52,7 +74,9 @@ router.post('/submit', upload.single('resume'), async (req, res) => {
   const existingUser = await ResumeForm.findOne({ email: data.email });
   if (existingUser) {
     console.log('❌ Email already exists:', data.email);
-    return res.status(400).send("<h1>Email already registered.</h1>");
+    return res.status(400).json({
+     errors: ["Email is already registered"]
+   });
   }
 
   const resumeData = new ResumeForm({

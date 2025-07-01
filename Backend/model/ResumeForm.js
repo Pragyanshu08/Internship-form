@@ -17,6 +17,12 @@ const projectSchema = new mongoose.Schema({
   project_link: String
 }, { _id: false });
 
+const experienceSchema = new mongoose.Schema({
+  company_name: String,
+  position: String,
+  duration: String
+}, { _id: false });
+
 const resumeSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -53,17 +59,26 @@ const resumeSchema = new mongoose.Schema({
 
   academicDetails: [academicSchema],
 
-  domain: {
-    type: String,
-    enum: ['Web Development', 'App Development', 'UI/UX Design', 'Data Science', 'Cybersecurity']
+  domains: {
+   type: [String],
+   required: true,
+   default: []
   },
+
   skills: {
-    type: [String],
-    default: []
+   type: [String],
+   required: true,
+   default: []
   },
+
   certifications: String,
 
   projects: [projectSchema],
+
+  experiences: {
+  type: [experienceSchema],
+  default: []
+},
 
   resumeFileName: String,
   portfolio: {

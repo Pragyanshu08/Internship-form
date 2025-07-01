@@ -62,15 +62,28 @@ router.get('/login/dashboard',async (req, res) => {
   }
 });
 
+//!add AdminAuth middleware
 
-
-router.get('/login/uploads/:filename', AdminAuth , (req, res) => {
+router.get('/login/uploads/:filename', (req, res) => {
   // console.log(path.join(__dirname, '..', '..', '..' ,'frontend' ,'uploads', req.params.filename));
   const filePath = path.join(__dirname, '..', '..', '..' ,'frontend' ,'uploads', req.params.filename);
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
   } else {
     res.status(404).send('File not found');
+  }
+});
+
+router.get('/login/student-details/:id', async (req, res) => {
+  try {
+    const student = await ResumeForm.findById(req.params.id);
+    if (!student) {
+      return res.status(404).send('Student not found');
+    }
+    res.render('student-details', { student });
+  } catch (err) {
+    console.error('❌ Error fetching student details:', err);
+    res.status(500).send('Error loading student details');
   }
 });
 

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Resume Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #222;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      color: #111;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 30px;
+      color: #0051a2;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 6px;
+    }
+
+    p, li {
+      font-size: 15px;
+      margin: 6px 0;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .resume-link {
+      margin-top: 10px;
+    }
+
+    a {
+      color: #0056cc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .timestamp {
+      margin-top: 30px;
+      font-style: italic;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/api/admin/login/dashboard" class="back-button">← Back to Dashboard</a>
+
+  <div class="container">
+    <h1><%= student.firstName %> <%= student.lastName || '' %></h1>
+
+    <div class="section">
+      <h2>Contact Info</h2>
+      <p><strong>Email:</strong> <%= student.email %></p>
+      <p><strong>Phone:</strong> <%= student.phone %></p>
+      <p><strong>Address:</strong> <%= student.address %></p>
+    </div>
+
+    <div class="section">
+      <h2>Domains</h2>
+      <ul>
+        <% student.domains?.forEach(domain => { %>
+          <li><%= domain %></li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Skills</h2>
+      <ul>
+        <% student.skills?.forEach(skill => { %>
+          <li><%= skill %></li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <% if (student.certifications) { %>
+      <div class="section">
+        <h2>Certifications</h2>
+        <p><%= student.certifications %></p>
+      </div>
+    <% } %>
+
+    <div class="section">
+      <h2>Academic Details</h2>
+      <% student.academicDetails?.forEach(edu => { %>
+        <div>
+          <p><strong>Education:</strong> <%= edu.education %></p>
+          <p><strong>Board/University:</strong> <%= edu.boardUniversity %></p>
+          <p><strong>School/Institute:</strong> <%= edu.schoolInstitute %></p>
+          <p><strong>Pass Year:</strong> <%= edu.passYear %></p>
+          <p><strong>Percentage:</strong> <%= edu.percentage %></p>
+          <hr style="margin: 15px 0;" />
+        </div>
+      <% }) %>
+    </div>
+
+    <% if (student.experiences?.length > 0) { %>
+      <div class="section">
+        <h2>Experience</h2>
+        <% student.experiences.forEach(exp => { %>
+          <div>
+            <p><strong>Company:</strong> <%= exp.company_name %></p>
+            <p><strong>Position:</strong> <%= exp.position %></p>
+            <p><strong>Duration:</strong> <%= exp.duration %></p>
+            <hr style="margin: 15px 0;" />
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <% if (student.projects?.length > 0) { %>
+      <div class="section">
+        <h2>Projects</h2>
+        <% student.projects.forEach(project => { %>
+          <div>
+            <p><strong>Name:</strong> <%= project.project_name %></p>
+            <p><strong>Description:</strong> <%= project.desc %></p>
+            <p><strong>Role:</strong> <%= project.role %></p>
+            <p><strong>Tech Used:</strong> <%= Array.isArray(project.tech_uses) ? project.tech_uses.join(', ') : project.tech_uses %></p>
+            <% if (project.project_link) { %>
+              <p><strong>Link:</strong> <a href="<%= project.project_link %>" target="_blank"><%= project.project_link %></a></p>
+            <% } %>
+            <hr style="margin: 15px 0;" />
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <% if (student.resumeFileName) { %>
+      <div class="section resume-link">
+        <h2>Resume</h2>
+        <a href="/api/admin/login/uploads/<%= student.resumeFileName %>" target="_blank">Download Resume</a>
+      </div>
+    <% } %>
+
+    <% if (student.portfolio) { %>
+      <div class="section">
+        <h2>Portfolio</h2>
+        <a href="<%= student.portfolio %>" target="_blank"><%= student.portfolio %></a>
+      </div>
+    <% } %>
+
+    <% if (student.linkedin) { %>
+      <div class="section">
+        <h2>LinkedIn</h2>
+        <a href="<%= student.linkedin %>" target="_blank"><%= student.linkedin %></a>
+      </div>
+    <% } %>
+
+    <% if (student.createdAt) { 
+         const submittedAt = new Date(student.createdAt).toLocaleString('en-IN', {
+           day: '2-digit',
+           month: 'short',
+           year: 'numeric',
+           hour: '2-digit',
+           minute: '2-digit',
+           hour12: true
+         });
+    %>
+      <div class="timestamp">Submitted on: <%= submittedAt %></div>
+    <% } %>
+  </div>
+
+</body>
+</html>

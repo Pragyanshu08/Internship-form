@@ -20,26 +20,27 @@
       <div><button class="form-tab" onclick="showForm(1)">Academic</button></div>
       <div><button class="form-tab" onclick="showForm(2)">Skills</button></div>
       <div><button class="form-tab" onclick="showForm(3)">Projects</button></div>
-      <div><button class="form-tab" onclick="showForm(4)">Upload Resume</button></div>
+      <div><button class="form-tab" onclick="showForm(4)">Experience</button></div>
+      <div><button class="form-tab" onclick="showForm(5)">Upload Resume</button></div>
     </div>
 
     <!-- Personal Form -->
     <div class="form-step active">
       <h2>Your Personal Details</h2>
       <label>First Name:</label>
-      <input type="text" name="firstName" pattern="[A-Za-z\s]+" title="Only letters allowed" required>
+      <input type="text" name="firstName" pattern="[A-Za-z\s]+" title="Only letters allowed" >
 
       <label>Last Name:</label>
       <input type="text" name="lastName" >
 
       <label>Email:</label>
-      <input type="email" name="email" required>
+      <input type="email" name="email" >
 
       <label>Phone No:</label>
-      <input type="tel" name="phone" pattern="\d{10}" title="Enter 10 digit number" required>
+      <input type="tel" name="phone" pattern="\d{10}" title="Enter 10 digit number">
 
       <label>Address:</label>
-      <textarea rows="3" cols="40" name="address" required></textarea>
+      <textarea rows="3" cols="40" name="address" ></textarea>
 
       <button type="button" class="next" onclick="showForm(1)">Next >></button>
     </div>
@@ -51,7 +52,7 @@
   <div id="academic-section-container">
     <div class="academic-section contains">
       <label>Level of Education:</label>
-      <select name="education0" required>
+      <select name="education0" >
         <option value="">Select Education</option>
         <option value="10th">10th</option>
         <option value="12th">12th</option>
@@ -62,10 +63,10 @@
       </select> 
 
       <label>Board/University:</label>
-      <input type="text" name="board-university0" required>
+      <input type="text" name="board-university0">
 
       <label>School/Institute:</label>
-      <input type="text" name="school-institute0" required>
+      <input type="text" name="school-institute0" >
 
       <label>Passing Year:</label>
       <input type="month" name="passYear0">
@@ -85,20 +86,20 @@
     <div class="form-step">
       <h2>Your Skills</h2>
 
-      <label>Domain:</label>
-      <select name="domain">
-        <option>Select Domain</option>
-        <option>Web Development</option>
-        <option>App Development</option>
-        <option>UI/UX Design</option>
-        <option>Data Science</option>
-        <option>Cybersecurity</option>
-      </select>
+      <label>Domain</label>
+      <div class="multi-select" id="domainSelect" >
+        <div class="selected-items" id="selectedDomains"></div>
+        <input type="text" id="domainInput" placeholder="Select or type new Domain..." />
+        <div class="options" id="domainOptionsList">
+          <!-- Options will be populated dynamically -->
+        </div>
+      </div>
 
-      <label>Skills:</label>
-      <div class="multi-select" id="multiSelect" required>
+
+       <label>Skills:</label>
+        <div class="multi-select" id="multiSelect" >
         <div class="selected-items" id="selectedItems"></div>
-        <input type="text" id="inputBox" placeholder="Select or type new option...">
+        <input type="text" id="inputBox" placeholder="Select or type new skills...">
         <div class="options" id="optionsList">
           <!-- Options will be populated dynamically -->
         </div>
@@ -117,11 +118,11 @@
 
   <div id="project-section-container">
     <div class="project-section contains">
-     <label>Project Name 1</label>
-     <input type="text" name="project_name0" required>
+     <label>Project Name </label>
+     <input type="text" name="project_name0" >
 
       <label for="desc">Description</label>
-      <textarea name="desc" id="desc0" rows="1" cols="40" required></textarea>
+      <textarea name="desc" id="desc0" rows="1" cols="40" ></textarea>
 
       <label>Developer's role</label>
       <textarea name="role0" rows="1" cols="40"></textarea>
@@ -132,7 +133,7 @@
       </div>
 
       <label style="margin-top: -.8rem">Project Link</label>
-      <input type="url" name="project_link0" required>
+      <input type="url" name="project_link0">
     </div>
   </div>
 
@@ -143,12 +144,39 @@
       <button type="button" class="new" id="add-project-btn">+ Add More</button>
     </div>
 
+    <!-- Experience Form -->
+    <div class="form-step">
+      <h2>Your Experience</h2>
+
+  <div id="experience-section-container">
+    <div class="experience-section contains">
+     <label>Company Name </label>
+     <input type="text" name="company_name0">
+
+      <label for="Position0">Position / Role</label>
+      <input type="text" name="Position0">
+
+      <label>Duration </label>
+      <input type="text" name="duration0" id="duration">
+      <small style="opacity: .5; margin-top: 1rem;">Eg: Month YYYY - Month YYYY</small>
+
+    </div>
+  </div>
+
+
+      <button type="button" class="prev" onclick="showForm(3)"><< Previous</button>
+      <button type="button" class="next" onclick="showForm(5)">Next >></button>
+
+      <button type="button" class="new" id="add-experience-btn">+ Add More</button>
+    </div>
+
+
     <!-- Upload Resume Form -->
     <div class="form-step">
       <h2>Upload Your Resume</h2>
 
       <label>Upload Resume (PDF/DOCX):</label>
-      <input type="file" name="resume" accept=".pdf, .doc, .docx" required>
+      <input type="file" name="resume" accept=".pdf, .doc, .docx" >
 
       <label>Portfolio Website (if any):</label>
       <input type="url" name="portfolio" placeholder="https://yourportfolio.com">
@@ -156,7 +184,7 @@
       <label>LinkedIn Profile:</label>
       <input type="url" name="linkedin" placeholder="https://linkedin.com/in/yourname">
 
-      <button type="button" class="prev" onclick="showForm(3)"><< Previous</button>
+      <button type="button" class="prev" onclick="showForm(4)"><< Previous</button>
       <button type="button" class="submit" onclick="submitMultiForm(event)">Submit !</button>
     </div>
   </div>
