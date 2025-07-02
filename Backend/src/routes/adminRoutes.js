@@ -65,7 +65,7 @@ router.get('/auth/redirect', async (req, res) => {
 router.get('/login/dashboard', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;        // Default page = 1
-    const limit = parseInt(req.query.limit) || 15;     // Default limit = 15
+    const limit = parseInt(req.query.limit) || 10;     // Default limit = 10
     const skip = (page - 1) * limit;
 
     // Count the total number of students

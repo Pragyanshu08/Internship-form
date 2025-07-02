@@ -21,7 +21,7 @@
     h1 {
       text-align: center;
       margin-bottom: 30px;
-      font-size: 28px;
+      font-size: 2rem;
       color: #111;
     }
 
@@ -31,9 +31,12 @@
       border: none;
       padding: 8px 16px;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
+      position: absolute;
+      right: 2rem;
+      top: 2.9rem;
     }
 
     .table-container {
@@ -49,7 +52,7 @@
       width: 100%;
       border-collapse: collapse;
       min-width: 900px;
-      font-size: 15px;
+      font-size: .8rem;
     }
 
     thead {
@@ -59,16 +62,15 @@
 
     th, td {
       text-align: left;
-      padding: 12px 16px;
+      padding: 0.5rem 1rem;
       border-bottom: 1px solid #ccc;
     }
-
-    
 
     th {
       text-transform: uppercase;
       font-weight: bold;
       letter-spacing: 0.5px;
+      padding: .7rem 1rem;
     }
 
     td {
@@ -127,9 +129,21 @@
     }
 
 
-    @media (max-width: 768px) {
+    @media (max-width: 700px) {
+       h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.3rem;
+        color: #111;
+      }
+
+      .logout-btn{
+        top: 2.5rem;
+        font-size: 0.8rem;
+      }
+      
       table {
-        font-size: 14px;
+        font-size: 1rem;
       }
 
       th, td {
@@ -146,10 +160,9 @@
         font-size: 13px;
       }
 
-      h1 {
-        font-size: 22px;
+      .logout-btn{
+        top: 0.5rem;
       }
-    }
   </style>
 </head>
 <body>
@@ -224,14 +237,14 @@
     
     <!-- Prev Button -->
     <% if (currentPage > 1) { %>
-      <a class="prev-btn" href="?page=<%= currentPage - 1 %>&limit=15"> &laquo; Prev </a>
+      <a class="prev-btn" href="?page=<%= currentPage - 1 %>&limit=10"> &laquo; Prev </a>
     <% } %>
 
     <!-- Page Number Links -->
     <% if (totalPages <= 5) { %>
       <!-- Display all pages if totalPages <= 5 -->
       <% for (let i = 1; i <= totalPages; i++) { %>
-        <a href="?page=<%= i %>&limit=15"
+        <a href="?page=<%= i %>&limit=10"
           style="margin: 0 5px; padding: 6px 12px;
                   background-color: <%= currentPage === i ? '#333' : '#eee' %>;
                   color: <%= currentPage === i ? '#fff' : '#333' %>;
@@ -243,36 +256,36 @@
       <!-- Display pages with ellipsis if totalPages > 5 -->
       <% if (currentPage === 1 || currentPage === 2 || currentPage === totalPages) { %>
         <!-- Show first two pages, then ... and last page -->
-        <a href="?page=1&limit=15" style="margin: 0 5px; padding: 6px 12px;
+        <a href="?page=1&limit=10" style="margin: 0 5px; padding: 6px 12px;
            background-color: <%= currentPage === 1 ? '#333' : '#eee' %>;
            color: <%= currentPage === 1 ? '#fff' : '#333' %>;">1</a>
-        <a href="?page=2&limit=15" style="margin: 0 5px; padding: 6px 12px;
+        <a href="?page=2&limit=10" style="margin: 0 5px; padding: 6px 12px;
            background-color: <%= currentPage === 2 ? '#333' : '#eee' %>;
            color: <%= currentPage === 2 ? '#fff' : '#333' %>;">2</a>
         <span>...</span>
-        <a href="?page=<%= totalPages %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+        <a href="?page=<%= totalPages %>&limit=10" style="margin: 0 5px; padding: 6px 12px;
            background-color: <%= currentPage === totalPages ? '#333' : '#eee' %>;
            color: <%= currentPage === totalPages ? '#fff' : '#333' %>;">
            <%= totalPages %>
         </a>
       <% } else { %>
         <!-- Show first page, ... middle pages, then last page -->
-        <a href="?page=1&limit=15" style="margin: 0 5px; padding: 6px 12px;
+        <a href="?page=1&limit=10" style="margin: 0 5px; padding: 6px 12px;
            background-color: <%= currentPage === 1 ? '#333' : '#eee' %>;
            color: <%= currentPage === 1 ? '#fff' : '#333' %>;">1</a>
         <span>...</span>
-        <a href="?page=<%= currentPage - 1 %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+        <a href="?page=<%= currentPage - 1 %>&limit=10" style="margin: 0 5px; padding: 6px 12px;
            background-color: <%= currentPage === (currentPage - 1) ? '#333' : '#eee' %>;
            color: <%= currentPage === (currentPage - 1) ? '#fff' : '#333' %>;">
            <%= currentPage - 1 %>
         </a>
-        <a href="?page=<%= currentPage + 1 %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+        <a href="?page=<%= currentPage + 1 %>&limit=10" style="margin: 0 5px; padding: 6px 12px;
            background-color: <%= currentPage === (currentPage + 1) ? '#333' : '#eee' %>;
            color: <%= currentPage === (currentPage + 1) ? '#fff' : '#333' %>;">
            <%= currentPage + 1 %>
         </a>
         <span>...</span>
-        <a href="?page=<%= totalPages %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+        <a href="?page=<%= totalPages %>&limit=10" style="margin: 0 5px; padding: 6px 12px;
            background-color: <%= currentPage === totalPages ? '#333' : '#eee' %>;
            color: <%= currentPage === totalPages ? '#fff' : '#333' %>;">
            <%= totalPages %>
@@ -282,7 +295,7 @@
 
     <!-- Next Button -->
     <% if (currentPage < totalPages) { %>
-      <a class="next-btn" href="?page=<%= currentPage + 1 %>&limit=15"> Next &raquo; </a>
+      <a class="next-btn" href="?page=<%= currentPage + 1 %>&limit=10"> Next &raquo; </a>
     <% } %>
 
   <% } %>
