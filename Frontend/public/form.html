@@ -72,7 +72,7 @@
       <input type="month" name="passYear0">
 
       <label>Percentage/CGPA:</label>
-      <input type="number" name="percentage0">
+      <input type="number" step="any" min="0.0" max="100.0" name="percentage0">
     </div>
   </div>
 
@@ -105,8 +105,13 @@
         </div>
       </div>
 
+      <!-- <label>Certifications:</label>
+      <textarea rows="4" cols="40" name="certifications" placeholder="Mention any technical certifications you have..."></textarea> -->
+
       <label>Certifications:</label>
-      <textarea rows="4" cols="40" name="certifications" placeholder="Mention any technical certifications you have..."></textarea>
+      <div class="newInput">
+       <span><input type="text" name="certificaions" placeholder="Mention any technical certifications you have..."><button class="add" id="1">+</button></span>
+      </div>
 
       <button type="button" class="prev" onclick="showForm(1)"><< Previous</button>
       <button type="button" class="next" onclick="showForm(3)">Next >></button>
@@ -188,7 +193,6 @@
       <button type="button" class="submit" onclick="submitMultiForm(event)">Submit !</button>
     </div>
   </div>
-
 
 
   <!-- Toastify JS -->

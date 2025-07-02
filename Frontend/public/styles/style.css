@@ -7,7 +7,6 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* background: linear-gradient(180deg, #171718, #616060, #aba9ac); */
   background-color: #fff;
   color: #000;
   min-height: 100vh;
@@ -20,9 +19,6 @@ body {
 .container {
   width: 90%;
   height: 100vh;
-  /* max-width: 800px; */
-  /* background-color: #f9f9f955; */
-  /* background: linear-gradient(360deg, #171718, #616060, #aba9ac); */
   background-color: transparent;
   padding: 2rem;
   border-radius: 20px;
