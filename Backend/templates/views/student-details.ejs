@@ -5,35 +5,60 @@
   <title>Resume - <%= student.firstName %> <%= student.lastName %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
+        body {
       font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 50px;
+      padding: 50px 0 0 0; 
+      display: flex;
+      justify-content: center;
       background-color: #f0eeee;
     }
 
-    .container {
+    .wrapper{
       background: #e0dfdf;
-      width: 70%;
-      margin: auto;
-      padding: 30px;
-      display: flex;
-      justify-content: space-between;
+      width: 80vw;
       border-radius: 20px;
+    }
+
+    .container {
+      display: flex;
+      padding: 60px;
+      padding-top: 0;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+
+    .heading{
+      height: 12rem;
+      background: black;
+      padding: 0 2rem;
+      border-radius: 20px 20px 0 0;
+      h1{
+        color: white;
+        font-size: 5rem;
+        letter-spacing: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+      p{
+        color: white;
+        font-size: 2rem;
+        letter-spacing: 0.5rem;
+        margin-bottom: 1rem;
+      }
     }
 
     /* Left Side (Main Content) */
     .left-side {
+      border-left: 5px solid black;
       width: 60%;
-      padding-right: 20px;
+      padding: 0 20px;
     }
 
     /* Right Side (Personal Info, Skills) */
     .right-side {
       width: 35%;
       padding-left: 20px;
-      border-left: 2px solid #ddd;
-      padding-top: 50px;
+      border-left: 5px solid black;
     }
 
     h1 {
@@ -46,7 +71,6 @@
     h2 {
       font-size: 18px;
       color: #0051a2;
-      margin-top: 5px;
     }
 
     p {
@@ -59,15 +83,27 @@
       font-size: 15px;
     }
 
-    .section {
-      margin-top: 20px;
-    }
-
     .section-title {
       font-size: 1.5rem;
       font-weight: bold;
       color: #444;
       text-decoration: underline;
+      margin-top: 0;
+      position: relative;
+    }
+
+    .section-title::before{
+      content: "";
+      width: 1rem;
+      height: 1rem;
+      background-color: #e0dfdf;
+      border: 3px solid black;
+      /* clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); */
+      border-radius: 50%;
+      position: absolute;
+      bottom: 4px;
+      left: -33px;
+
     }
 
     .contact-info p, .skills p {
@@ -90,49 +126,108 @@
       border-radius: 3px;
     }
 
-    .skill-level {
-      height: 6px;
-      border-radius: 3px;
-    }
-
-    .resume-link a {
-      color: #0056cc;
-      text-decoration: none;
-    }
-
-    .resume-link a:hover {
-      text-decoration: underline;
-    }
-
-    .timestamp {
-      margin-top: 30px;
-      font-style: italic;
-      color: #666;
-      font-size: 13px;
-    }
-
-    .personal-info {
-      margin-top: 20px;
-    }
-
-    .personal-info p {
-      margin-bottom: 8px;
-    }
-
     .section hr {
       margin: 10px 0;
       border: 1px solid #ccc;
     }
-  </style>
+
+    @media (max-width: 600px) {
+  body {
+    padding: 20px 0;
+  }
+
+  .wrapper {
+    width: 90vw;
+  }
+
+  .container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .heading {
+    height: auto;
+    padding: 1rem;
+    text-align: left;
+  }
+
+  .heading h1 {
+    font-size: 2.5rem;
+    letter-spacing: 0.5rem;
+  }
+
+  .heading p {
+    font-size: 1.5rem;
+    letter-spacing: 0.3rem;
+  }
+
+  .left-side, .right-side {
+    width: 100%;
+    padding: 0 10px 0 10px;
+    border-left: 2px solid black;
+
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #111;
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 16px;
+    color: #0051a2;
+    margin-top: 5px;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 6px 0;
+  }
+
+  ul {
+    padding-left: 15px;
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .skills ul {
+    padding-left: 15px;
+  }
+
+  .skills li {
+    margin-bottom: 8px;
+  }
+
+  .skills .skill-bar {
+    height: 5px;
+  }
+
+  .section hr {
+    margin: 8px 0;
+    border: 1px solid #ccc;
+  }
+}
+</style>
 </head>
 <body>
 
+  <div class="wrapper">
+    <div class="heading">
+      <h1><%= student.firstName %> <%= student.lastName || '' %></h1>
+      <% if (student.experiences && student.experiences.length > 0) { 
+       const lastExp = student.experiences[student.experiences.length - 1]; %>
+        <p><%= lastExp.position %></p>
+      <% } %>
+      <hr>
+    </div>
   <div class="container">
     <!-- Left Side (Main Content) -->
     <div class="left-side">
-      <h1><%= student.firstName %> <%= student.lastName || '' %></h1>
-        <p><strong></strong> <%= student.address %></p>
-        <hr />
 
       <!-- Work Experience -->
       <div class="section">
@@ -140,8 +235,9 @@
         <% student.experiences?.forEach(exp => { %>
           <p><strong><%= exp.company_name %></strong> || <%= exp.position %></p>
           <p> <%= exp.duration %></p>
-          <hr />
+          <br>
         <% }) %>
+        <hr>
       </div>
 
       <!-- Projects -->
@@ -153,9 +249,9 @@
           <p><strong>Tech Used:</strong> <%= project.tech_uses %></p>
           <% if (project.project_link) { %>
             <p><strong>Link:</strong> <a href="<%= project.project_link %>" target="_blank"><%= project.project_link %></a></p>
-          <% } %>
-          <hr />
+          <% } %> <br>
         <% }) %>
+        <hr>
       </div>
     </div>
 
@@ -164,7 +260,7 @@
       <div class="section">
         <h2 class="section-title">Skills</h2>
         <% student.skills?.forEach(skill => { %>
-          <p><strong><%= skill.name %></strong></p>
+          <p style="display: inline;">&bull; <%= skill %></p>
           <div class="skill-bar">
             <div class="skill-level" style="width: <%= skill.level %>%"></div>
           </div>
@@ -193,6 +289,7 @@
         <hr>
       </div>
     </div>
+  </div>
   </div>
 
 </body>
