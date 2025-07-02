@@ -25,6 +25,17 @@
       color: #111;
     }
 
+    .logout-btn{
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     .table-container {
       width: 100%;
       overflow-x: auto;
@@ -85,6 +96,37 @@
       font-style: italic;
     }
 
+/* Pagination */
+
+    .pagination{
+      margin-top: 20px;
+       text-align: center;
+    }
+
+    .prev-btn{
+      margin: 0 5px;
+      padding: 6px 12px;
+      background-color: #f0f0f0;
+      color: #333;
+      text-decoration: none;
+      border-radius: 4px; 
+    }
+
+    .next-btn{
+      margin: 0 5px; 
+      padding: 6px 12px;
+      background-color: #f0f0f0; 
+      color: #333;
+      text-decoration: none; 
+      border-radius: 4px;
+    }
+
+    .prev-btn:hover, .next-btn:hover{
+      background: #333;
+      color: #f0f0f0;
+    }
+
+
     @media (max-width: 768px) {
       table {
         font-size: 14px;
@@ -114,16 +156,7 @@
 
   <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
   <form action="/api/admin/logout" >
-    <button type="submit" style="
-      background-color: #e74c3c;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-    ">Logout</button>
+    <button type="submit" class="logout-btn">Logout</button>
   </form>
   </div>
 
@@ -184,6 +217,78 @@
 
 
     </table>
+    
+<!-- Pagination here -->
+<div class="pagination">
+  <% if (totalPages > 1) { %> <!-- Check if there are multiple pages -->
+    
+    <!-- Prev Button -->
+    <% if (currentPage > 1) { %>
+      <a class="prev-btn" href="?page=<%= currentPage - 1 %>&limit=15"> &laquo; Prev </a>
+    <% } %>
+
+    <!-- Page Number Links -->
+    <% if (totalPages <= 5) { %>
+      <!-- Display all pages if totalPages <= 5 -->
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <a href="?page=<%= i %>&limit=15"
+          style="margin: 0 5px; padding: 6px 12px;
+                  background-color: <%= currentPage === i ? '#333' : '#eee' %>;
+                  color: <%= currentPage === i ? '#fff' : '#333' %>;
+                  text-decoration: none; border-radius: 4px;">
+          <%= i %>
+        </a>
+      <% } %>
+    <% } else { %>
+      <!-- Display pages with ellipsis if totalPages > 5 -->
+      <% if (currentPage === 1 || currentPage === 2 || currentPage === totalPages) { %>
+        <!-- Show first two pages, then ... and last page -->
+        <a href="?page=1&limit=15" style="margin: 0 5px; padding: 6px 12px;
+           background-color: <%= currentPage === 1 ? '#333' : '#eee' %>;
+           color: <%= currentPage === 1 ? '#fff' : '#333' %>;">1</a>
+        <a href="?page=2&limit=15" style="margin: 0 5px; padding: 6px 12px;
+           background-color: <%= currentPage === 2 ? '#333' : '#eee' %>;
+           color: <%= currentPage === 2 ? '#fff' : '#333' %>;">2</a>
+        <span>...</span>
+        <a href="?page=<%= totalPages %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+           background-color: <%= currentPage === totalPages ? '#333' : '#eee' %>;
+           color: <%= currentPage === totalPages ? '#fff' : '#333' %>;">
+           <%= totalPages %>
+        </a>
+      <% } else { %>
+        <!-- Show first page, ... middle pages, then last page -->
+        <a href="?page=1&limit=15" style="margin: 0 5px; padding: 6px 12px;
+           background-color: <%= currentPage === 1 ? '#333' : '#eee' %>;
+           color: <%= currentPage === 1 ? '#fff' : '#333' %>;">1</a>
+        <span>...</span>
+        <a href="?page=<%= currentPage - 1 %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+           background-color: <%= currentPage === (currentPage - 1) ? '#333' : '#eee' %>;
+           color: <%= currentPage === (currentPage - 1) ? '#fff' : '#333' %>;">
+           <%= currentPage - 1 %>
+        </a>
+        <a href="?page=<%= currentPage + 1 %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+           background-color: <%= currentPage === (currentPage + 1) ? '#333' : '#eee' %>;
+           color: <%= currentPage === (currentPage + 1) ? '#fff' : '#333' %>;">
+           <%= currentPage + 1 %>
+        </a>
+        <span>...</span>
+        <a href="?page=<%= totalPages %>&limit=15" style="margin: 0 5px; padding: 6px 12px;
+           background-color: <%= currentPage === totalPages ? '#333' : '#eee' %>;
+           color: <%= currentPage === totalPages ? '#fff' : '#333' %>;">
+           <%= totalPages %>
+        </a>
+      <% } %>
+    <% } %>
+
+    <!-- Next Button -->
+    <% if (currentPage < totalPages) { %>
+      <a class="next-btn" href="?page=<%= currentPage + 1 %>&limit=15"> Next &raquo; </a>
+    <% } %>
+
+  <% } %>
+</div>
+
+
   </div>
 
 </body>

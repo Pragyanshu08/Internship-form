@@ -5,133 +5,138 @@
   <title>Resume - <%= student.firstName %> <%= student.lastName %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-        body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 50px 0 0 0; 
-      display: flex;
-      justify-content: center;
-      background-color: #f0eeee;
-    }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  padding: 50px 0 0 0; 
+  display: flex;
+  justify-content: center;
+  background-color: #f0eeee;
+}
 
-    .wrapper{
-      background: #e0dfdf;
-      width: 80vw;
-      border-radius: 20px;
-    }
+.wrapper {
+  background: #e0dfdf;
+  width: 80vw;  /* Make sure the wrapper takes full width */
+  max-width: 1200px; /* Optional: Limits the max width of the wrapper */
+  border-radius: 20px;  
+}
 
-    .container {
-      display: flex;
-      padding: 60px;
-      padding-top: 0;
-      border-radius: 20px;
-      margin-top: 20px;
-    }
+.container {
+  display: flex;
+  flex-wrap: wrap;  /* Allow content to wrap for smaller screens */
+  padding: 60px;
+  padding-top: 0;
+  border-radius: 20px;
+  margin-top: 20px;
+}
 
-    .heading{
-      height: 12rem;
-      background: black;
-      padding: 0 2rem;
-      border-radius: 20px 20px 0 0;
-      h1{
-        color: white;
-        font-size: 5rem;
-        letter-spacing: 1rem;
-        font-weight: 500;
-        text-transform: uppercase;
-      }
-      p{
-        color: white;
-        font-size: 2rem;
-        letter-spacing: 0.5rem;
-        margin-bottom: 1rem;
-      }
-    }
+.heading {
+  height: auto; /* Removed fixed height for responsiveness */
+  background: black;
+  padding: 2rem 3rem;
+  border-radius: 20px 20px 0 0;
+  text-align: left;  /* Center the heading */
+}
 
-    /* Left Side (Main Content) */
-    .left-side {
-      border-left: 5px solid black;
-      width: 60%;
-      padding: 0 20px;
-    }
+.heading h1 {
+  color: white;
+  font-size: 4rem; /* Scalable font size */
+  letter-spacing: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
 
-    /* Right Side (Personal Info, Skills) */
-    .right-side {
-      width: 35%;
-      padding-left: 20px;
-      border-left: 5px solid black;
-    }
+.heading p {
+  color: white;
+  font-size: 1.8rem; /* Adjust for readability */
+  letter-spacing: 0.5rem;
+  margin-bottom: 1rem;
+}
 
-    h1 {
-      font-size: 30px;
-      font-weight: bold;
-      color: #111;
-      margin: 0;
-    }
+.left-side, .right-side {
+  flex: 1 1 48%;  /* Make each side take 48% width on larger screens */
+  padding: 0 20px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
 
-    h2 {
-      font-size: 18px;
-      color: #0051a2;
-    }
+.left-side {
+  border-left: 5px solid black;
+}
 
-    p {
-      font-size: 15px;
-      margin: 6px 0;
-    }
+.right-side {
+  border-left: 5px solid black;
+}
 
-    ul {
-      padding-left: 20px;
-      font-size: 15px;
-    }
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #111;
+  margin: 0;
+}
 
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #444;
-      text-decoration: underline;
-      margin-top: 0;
-      position: relative;
-    }
+h2 {
+  font-size: 18px;
+  color: #0051a2;
+}
 
-    .section-title::before{
-      content: "";
-      width: 1rem;
-      height: 1rem;
-      background-color: #e0dfdf;
-      border: 3px solid black;
-      /* clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); */
-      border-radius: 50%;
-      position: absolute;
-      bottom: 4px;
-      left: -33px;
+p {
+  font-size: 15px;
+  margin: 6px 0;
+}
 
-    }
+ul {
+  padding-left: 20px;
+  font-size: 15px;
+}
 
-    .contact-info p, .skills p {
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #444;
+  text-decoration: underline;
+  margin-top: 0;
+  position: relative;
+}
 
-    .skills ul {
-      padding-left: 20px;
-    }
+.section-title::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background-color: #e0dfdf;
+  border: 3px solid black;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 4px;
+  left: -33px;
+}
 
-    .skills li {
-      margin-bottom: 10px;
-    }
+.contact-info p, .skills p {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
 
-    .skills .skill-bar {
-      height: 6px;
-      background-color: #ccc;
-      margin-top: 5px;
-      border-radius: 3px;
-    }
+.skills ul {
+  padding-left: 20px;
+}
 
-    .section hr {
-      margin: 10px 0;
-      border: 1px solid #ccc;
-    }
+.skills li {
+  margin-bottom: 10px;
+}
 
-    @media (max-width: 600px) {
+.skills .skill-bar {
+  height: 6px;
+  background-color: #ccc;
+  margin-top: 5px;
+  border-radius: 3px;
+}
+
+.section hr {
+  margin: 10px 0;
+  border: 1px solid #ccc;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
   body {
     padding: 20px 0;
   }
@@ -162,10 +167,9 @@
   }
 
   .left-side, .right-side {
-    width: 100%;
-    padding: 0 10px 0 10px;
+    width: 100%;  /* Ensure both sides stack on smaller screens */
+    padding: 0 10px;
     border-left: 2px solid black;
-
   }
 
   h1 {
@@ -211,7 +215,15 @@
     margin: 8px 0;
     border: 1px solid #ccc;
   }
+
+  .section-title::before {
+  width: 0.8rem;
+  height: 0.8rem;
+  bottom: 4px;
+  left: -4.3%;
 }
+}
+
 </style>
 </head>
 <body>

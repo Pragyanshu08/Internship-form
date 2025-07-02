@@ -52,15 +52,45 @@ router.get('/auth/redirect', async (req, res) => {
 });
 
 // Render Admin Dashboard  //!api/admin/login/dashboard   //add AdminAuth middleware
-router.get('/login/dashboard',async (req, res) => {
+// router.get('/login/dashboard',async (req, res) => {
+//   try {
+//     const students = await ResumeForm.find().sort({ createdAt: -1 });
+//     res.render('admin-dashboard', { students });
+//   } catch (err) {
+//     console.error('❌ Error fetching student data:', err);
+//     res.status(500).send('Error loading dashboard');
+//   }
+// });
+
+router.get('/login/dashboard', async (req, res) => {
   try {
-    const students = await ResumeForm.find().sort({ createdAt: -1 });
-    res.render('admin-dashboard', { students });
+    const page = parseInt(req.query.page) || 1;        // Default page = 1
+    const limit = parseInt(req.query.limit) || 15;     // Default limit = 15
+    const skip = (page - 1) * limit;
+
+    // Count the total number of students
+    const totalStudents = await ResumeForm.countDocuments();
+    const totalPages = Math.ceil(totalStudents / limit);  // Calculate total pages
+
+    // Fetch students with pagination
+    const students = await ResumeForm.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    // Pass students, currentPage, and totalPages to the view
+    res.render('admin-dashboard', {
+      students,
+      currentPage: page,
+      totalPages
+    });
+
   } catch (err) {
     console.error('❌ Error fetching student data:', err);
     res.status(500).send('Error loading dashboard');
   }
 });
+
 
 //!add AdminAuth middleware
 
@@ -95,6 +125,31 @@ router.get("/logout", (req, res) => {
     }
     res.redirect("https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=http://localhost:3000/");
   });
+});
+
+router.get("/dashboard", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const skip = (page - 1) * limit;
+
+    const totalStudents = await ResumeForm.countDocuments();
+    const totalPages = Math.ceil(totalStudents / limit);
+
+    const students = await ResumeForm.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.render("admin-dashboard", {
+      students,
+      currentPage: page,
+      totalPages,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
 });
 
 module.exports = router;
