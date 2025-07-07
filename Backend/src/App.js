@@ -34,8 +34,10 @@ app.set("views", path.join(__dirname, '..', 'templates', 'views'));
 // Routes
 const formRoutes = require('./routes/formRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const publicRoutes = require('./routes/publicRoutes');
 app.use('/api', formRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/public', publicRoutes);
 
 // Public entrypoint
 app.get('/', (req, res) => {
