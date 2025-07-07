@@ -6,38 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 50px 0 0 0;
+      padding:0;
+      margin: 0;
+    }
+
+    .container {
       display: flex;
-      justify-content: center;
-      background-color: #f0eeee;
+      flex-direction: column;
+      padding: 1.5rem;
+      padding-top: 0; 
     }
-
-    .wrapper {
-      background: #e0dfdf;
-      width: 80vw;
-      border-radius: 20px;
-    }
-
-.container {
-  display: flex;
-  flex-wrap: wrap;  /* Allow content to wrap for smaller screens */
-  padding: 60px;
-  padding-top: 0;
-  border-radius: 20px;
-  margin-top: 20px;
-}
 
     .heading {
-      height: 12rem;
-      background: black;
-      padding: 0 2rem;
-      border-radius: 20px 20px 0 0;
+      height: 8rem;
+      background: #5c5858;
+      padding: 1rem 1.5rem;
     }
 
     .heading h1 {
       color: white;
-      font-size: 5rem;
+      font-size: 3rem;
       letter-spacing: 1rem;
       font-weight: 500;
       text-transform: uppercase;
@@ -45,74 +33,24 @@
 
     .heading p {
       color: white;
-      font-size: 2rem;
+      font-size: 1.5rem;
       letter-spacing: 0.5rem;
-      margin-bottom: 1rem;
     }
-
-    .left-side {
-      border-left: 5px solid black;
-      width: 60%;
-      padding: 0 20px;
-    }
-
-    .right-side {
-      width: 35%;
-      padding-left: 20px;
-      border-left: 5px solid black;
-    }
-
-    h1, h2 {
+    
+    h1 {
+      font-size: 30px;
       font-weight: bold;
       color: #111;
       margin: 0;
     }
 
-    h1 { font-size: 30px; }
-    h2 { font-size: 18px; color: #0051a2; }
-
-.right-side {
-  border-left: 5px solid black;
-}
-
-h1 {
-  font-size: 30px;
-  font-weight: bold;
-  color: #111;
-  margin: 0;
-}
-
-h2 {
-  font-size: 18px;
-  color: #0051a2;
-}
-
-    .section-title::before {
-      content: "";
-      width: 1rem;
-      height: 1rem;
-      background-color: #e0dfdf;
-      border: 3px solid black;
-      border-radius: 50%;
-      position: absolute;
-      bottom: 4px;
-      left: -33px;
+    h2 {
+      font-size: 18px;
+      color: #0051a2;
+      text-transform: uppercase;
     }
-
-    .skills li, .cert-list li {
-      margin-bottom: 6px;
-    }
-
-.skills li {
-  margin-bottom: 10px;
-}
 
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        padding: 20px;
-      }
-
       .heading {
         height: auto;
         padding: 1rem;
@@ -120,25 +58,13 @@ h2 {
       }
 
       .heading h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
         letter-spacing: 0.5rem;
       }
 
       .heading p {
-        font-size: 1.5rem;
+        font-size: 1rem;
         letter-spacing: 0.3rem;
-      }
-
-      .left-side, .right-side {
-        width: 100%;
-        padding: 0 10px;
-        border-left: none;
-        border-top: 2px solid black;
-        margin-top: 20px;
-      }
-
-      .right-side {
-        border-left: none;
       }
     }
   </style>
@@ -154,17 +80,42 @@ h2 {
     </div>
 
     <div class="container">
-      <div class="left-side">
         <div class="section">
           <h2 class="section-title">Work Experience</h2>
           <% student.experiences?.forEach(exp => { %>
             <p><strong><%= exp.company_name %></strong> || <%= exp.position %></p>
-            <p><%= exp.duration %></p><br>
+            <p><%= exp.duration %></p>
+            <p><%=exp.desc %>Description</p>
+            <br>
           <% }) %>
           <hr>
         </div>
 
-        <div class="section">
+         <div class="section">
+          <h2 class="section-title">Skills</h2>
+            <% student.skills?.forEach((skill,index) => { %>
+              <%= skill %> <%= index < student.skills.length - 1 ? ', ' : '' %>
+            <% }) %>
+          <hr>
+        </div>  
+
+
+        <% if (student.certifications?.length > 0) { %>
+          <div class="section">
+            <h2 class="section-title">Certifications</h2>
+              <% student.certifications.forEach(cert => { %>
+                <li>
+                  <%= cert.name %>
+                  <% if (cert.link) { %>
+                    - <a href="<%= cert.link %>" target="_blank">Link</a>
+                  <% } %>
+                </li>
+              <% }) %>
+            <hr>
+          </div>
+        <% } %>
+
+      <div class="section">
           <h2 class="section-title">Projects</h2>
           <% student.projects?.forEach(project => { %>
             <p><strong><%= project.project_name %> || <%= project.role %></strong></p>
@@ -175,48 +126,22 @@ h2 {
             <% } %><br>
           <% }) %>
           <hr>
-        </div>
       </div>
 
-      <div class="right-side">
-        <div class="section">
-          <h2 class="section-title">Skills</h2>
-          <ul class="skills">
-            <% student.skills?.forEach(skill => { %>
-              <li><%= skill %></li>
-            <% }) %>
-          </ul>
-          <hr>
-        </div>
-
-        <% if (student.certifications?.length > 0) { %>
-          <div class="section">
-            <h2 class="section-title">Certifications</h2>
-            <ul class="cert-list">
-              <% student.certifications.forEach(cert => { %>
-                <li>
-                  <%= cert.name %>
-                  <% if (cert.link) { %>
-                    - <a href="<%= cert.link %>" target="_blank">Link</a>
-                  <% } %>
-                </li>
-              <% }) %>
-            </ul>
-            <hr>
-          </div>
-        <% } %>
-
-        <div class="section">
-          <h2 class="section-title">Education</h2>
-          <% student.academicDetails?.forEach(edu => { %>
-            <p><strong><%= edu.schoolInstitute %> | </strong> <%= edu.education %> || <%= edu.passYear %></p>
-            <p><strong>Board:</strong> <%= edu.boardUniversity %></p>
-            <p><strong>GPA/CGPA:</strong> <%= edu.percentage %></p><br>
-          <% }) %>
-          <hr>
-        </div>
+      
+      <div class="section">
+        <h2 class="section-title">Education</h2>
+        <% student.academicDetails?.forEach(edu => { %>
+          <p><strong><%= edu.schoolInstitute %> | </strong> <%= edu.education %> || <%= edu.passYear %></p>
+          <p><strong>Board:</strong> <%= edu.boardUniversity %></p>
+          <p><strong>GPA/CGPA:</strong> <%= edu.percentage %></p><br>
+        <% }) %>
+        <hr>
       </div>
+
     </div>
+    
+
   </div>
 </body>
 </html>
