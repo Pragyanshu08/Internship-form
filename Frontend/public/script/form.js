@@ -1,3 +1,6 @@
+// import { validatePersonalFields } from './formValidation.js';
+
+
 // Toggle between form steps with validation and button highlighting
   function showForm(index) {
     const allForms = document.querySelectorAll(".form-step");
@@ -18,6 +21,8 @@
       form.classList.toggle("active", i === index);
       buttons[i].classList.toggle("active", i === index);
     });
+
+
   }
 
   // Load & auto-fill localStorage values
@@ -64,43 +69,63 @@
     let academicCount = academicIndex;
 
     const firstProjectInputs = document.querySelectorAll('#project-section-container .project-section input, #project-section-container .project-section textarea');
-    firstProjectInputs.forEach(input => {
+firstProjectInputs.forEach(input => {
+  const name = input.name;
+  if (savedData.hasOwnProperty(name)) {
+    input.value = savedData[name];
+  }
+});
+
+
+   const projectContainer = document.getElementById("project-section-container");
+let projectIndex = 1;
+
+// Keep creating sections until data is not found
+while (
+  savedData.hasOwnProperty(`project_name${projectIndex}`) ||
+  savedData.hasOwnProperty(`desc${projectIndex}`) ||
+  savedData.hasOwnProperty(`role${projectIndex}`) ||
+  savedData.hasOwnProperty(`tech_uses${projectIndex}`) ||
+  savedData.hasOwnProperty(`project_link${projectIndex}`)
+) {
+  const section = document.createElement("div");
+  section.className = "project-section contains";
+  section.innerHTML = `
+    <label>Project Name ${projectIndex + 1}</label>
+    <input type="text" name="project_name${projectIndex}">
+
+    <label>Description</label>
+    <textarea name="desc${projectIndex}" rows="3" cols="40"></textarea>
+
+    <label>Developer's role</label>
+    <textarea name="role${projectIndex}" rows="3" cols="40"></textarea>
+
+    <label>Technology used</label>
+    <div class="newInput">
+      <span><input type="text" name="tech_uses${projectIndex}"></span>
+    </div>
+
+    <label>Project Link</label>
+    <input type="url" name="project_link${projectIndex}">
+  `;
+  projectContainer.appendChild(section);
+
+  // Fill values
+  section.querySelectorAll('input, textarea').forEach(input => {
     const name = input.name;
     if (savedData.hasOwnProperty(name)) {
       input.value = savedData[name];
     }
-    });
+  });
 
-
-    let projectIndex = 1;
-    while (savedData[`project_name${projectIndex}`]) {
-      const section = document.createElement("div");
-      section.className = "project-section contains";
-      section.innerHTML = `
-        <label>Project Name ${projectIndex}</label>
-        <input type="text" name="project_name${projectIndex}">
-
-        <label>Description</label>
-        <textarea name="desc${projectIndex}" rows="3" cols="40"></textarea>
-
-        <label>Developer's role</label>
-        <textarea name="role${projectIndex}" rows="3" cols="40"></textarea>
-
-        <label>Technology used</label>
-        <div class="newInput">
-          <span><input type="text" name="tech_uses${projectIndex}"></span>
-        </div>
-
-        <label>Project Link</label>
-        <input type="url" name="project_link${projectIndex}">
-      `;
-      projectContainer.appendChild(section);
-      projectIndex++;
-    }
+  projectIndex++;
+}
     let projectCount = projectIndex;
 
 
     let ExperienceIndex = 1;
+    const experienceContainer = document.getElementById("experience-section-container");
+
     while (savedData[`Company_name${ExperienceIndex}`]) {
       const section = document.createElement("div");
       section.className = "experience-section contains";
@@ -115,7 +140,7 @@
         <input type="text" name="duration${ExperienceIndex}" placeholder="eg. jan 2022 - mar 2025">
         <small>Format: Month YYYY - Month YYYY</small>
       `;
-      projectContainer.appendChild(section);
+      experienceContainer.appendChild(section);
       ExperienceIndex++;
     }
     let experienceCount = ExperienceIndex;
@@ -163,11 +188,26 @@
       renderSelected();
     }
 
+  
+
+
+
     
     window.academicCount = academicCount;
     window.projectCount = projectCount;
     window.experienceCount = experienceCount;
+
+
+    
+
+
   });
+
+
+  
+
+
+
 
 
 
@@ -479,6 +519,90 @@
   updateOptions();
 
 
+  // ---- Certification Multi-Input (like skills) ----
+let certifications = [];
+const saved = JSON.parse(localStorage.getItem("multiStepForm") || "{}");
+if (Array.isArray(saved.certifications)) certifications = saved.certifications;
+
+const certNameInput = document.getElementById("certNameInput");
+const certLinkInput = document.getElementById("certLinkInput");
+const certDisplay = document.getElementById("certificationItems");
+const addCertBtn = document.querySelector(".add-cert");
+
+function renderCertifications() {
+  certDisplay.innerHTML = "";
+  certifications.forEach(({ name, link }) => {
+    const box = document.createElement("div");
+    box.className = "cert-box";
+
+    const text = document.createElement("span");
+    text.textContent = name;
+
+    if (link) {
+      const anchor = document.createElement("a");
+      anchor.href = link;
+      anchor.textContent = " 🔗";
+      anchor.target = "_blank";
+      text.appendChild(anchor);
+    }
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "✕";
+    removeBtn.className = "remove-cert";
+    removeBtn.onclick = () => {
+      certifications = certifications.filter(c => c.name !== name || c.link !== link);
+      renderCertifications();
+      saveCertifications();
+    };
+
+    box.appendChild(text);
+    box.appendChild(removeBtn);
+    certDisplay.appendChild(box);
+  });
+}
+
+function saveCertifications() {
+  const formData = JSON.parse(localStorage.getItem("multiStepForm") || "{}");
+  formData.certifications = certifications;
+  localStorage.setItem("multiStepForm", JSON.stringify(formData));
+}
+
+addCertBtn.addEventListener("click", () => {
+  const name = certNameInput.value.trim();
+  const link = certLinkInput.value.trim();
+
+  if (!name) return;
+
+  certifications.push({ name, link });
+  certNameInput.value = "";
+  certLinkInput.value = "";
+  renderCertifications();
+  saveCertifications();
+});
+
+renderCertifications();
+
+
+
+//Upload button logic
+
+document.getElementById("browse-btn").addEventListener("click", () => {
+  document.getElementById("resume").click();
+});
+
+document.getElementById("resume").addEventListener("change", function () {
+  const fileName = this.files[0]?.name || "No file chosen";
+  document.getElementById("file-name").textContent = fileName;
+});
+
+
+
+
+
+
+
+
+
   // Submit form data
   async function submitMultiForm(event) {
     if (event) event.preventDefault();
@@ -512,6 +636,10 @@
   });
 
   formData.append("academicDetails", JSON.stringify(academicDetails));
+
+  // Collect certifications
+  formData.append("certifications", JSON.stringify(certifications)); // the array managed in memory
+
 
 
   // Collect projects

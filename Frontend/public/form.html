@@ -10,6 +10,9 @@
 
   <script defer src="./script/form.js"></script>
 
+  <!-- <script src="https://cdn.jsdelivr.net/npm/zod@3.22.4/lib/index.umd.min.js"></script>
+  <script type="module" src="./script/form.js"></script> -->
+
 </head>
 <body>
 
@@ -108,10 +111,27 @@
       <!-- <label>Certifications:</label>
       <textarea rows="4" cols="40" name="certifications" placeholder="Mention any technical certifications you have..."></textarea> -->
 
-      <label>Certifications:</label>
+      <!-- <label>Certifications:</label>
       <div class="newInput">
-       <span><input type="text" name="certificaions" placeholder="Mention any technical certifications you have..."><button class="add" id="1">+</button></span>
-      </div>
+       <span><input type="text" name="certifications" placeholder="Mention any technical certifications you have..."><button class="add" id="1">+</button></span>
+      </div> -->
+         
+    <!-- new -->
+   
+<label>Certifications:</label>
+ <div id="certifications-container">
+  <div>
+    <input type="text" id="certNameInput" placeholder="Certification Name" />
+    <input type="url" id="certLinkInput" placeholder="Link (optional)" />
+    <button type="button" class="add-cert">+</button>
+  </div>
+  <div id="certificationItems"></div>
+</div>
+
+
+
+
+
 
       <button type="button" class="prev" onclick="showForm(1)"><< Previous</button>
       <button type="button" class="next" onclick="showForm(3)">Next >></button>
@@ -180,8 +200,19 @@
     <div class="form-step">
       <h2>Upload Your Resume</h2>
 
-      <label>Upload Resume (PDF/DOCX):</label>
-      <input type="file" name="resume" accept=".pdf, .doc, .docx" >
+     <label>Upload Resume (PDF/DOCX):</label>
+<div class="custom-file-upload">
+  <div class="file-box">
+    <span id="file-name">No file chosen</span>
+    <button type="button" id="browse-btn">Browse</button>
+    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" hidden />
+  </div>
+  <small style="color: gray; display: block; margin-top: 5px;">
+    Max file size: 2MB. Only PDF, DOC, or DOCX files allowed.
+  </small>
+</div>
+
+
 
       <label>Portfolio Website (if any):</label>
       <input type="url" name="portfolio" placeholder="https://yourportfolio.com">

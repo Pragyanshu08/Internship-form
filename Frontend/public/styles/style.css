@@ -341,3 +341,101 @@ button.new{
   -webkit-animation:  shake 0.5s ease-in-out infinite;
 }
 
+/* Styling for certification */
+
+#certifications-container > div:first-child {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#certifications-container input {
+  flex: 1;
+  padding: 6px;
+  font-size: 14px;
+}
+
+.add-cert {
+  padding: 6px 12px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#certificationItems {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cert-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.remove-cert {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Upload button styling */
+
+.custom-file-upload {
+  margin-top: 1rem;
+  font-family: sans-serif;
+}
+
+.file-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #aaa;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+#file-name {
+  color: #555;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 80%;
+}
+
+#browse-btn {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#browse-btn:hover {
+  background-color: #0056b3;
+}
+
+
+/*  */
+
+.invalid-field {
+  border-color: red;
+}
+
+.error-message {
+  margin-top: 2px;
+  font-weight: 500;
+}

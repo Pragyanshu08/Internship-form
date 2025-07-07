@@ -33,7 +33,15 @@ const resumeFormValidation = z.object({
     invalid_type_error: 'Skills must be an array of strings'
   }).min(1, 'At least one skill is required'),
 
-  certifications: z.string().optional(),
+ certifications: z
+  .array(
+    z.object({
+      name: z.string().min(1, "Certification name is required"),
+      link: z.string().url("Invalid URL").optional().or(z.literal(""))
+    })
+  )
+  .optional()
+,
 
   portfolio: z.string().url('Invalid portfolio URL').optional(),
 
@@ -97,6 +105,7 @@ const resumeFormValidation = z.object({
   resumeFileName: z.string({
     required_error: 'Resume file is required'
   }).min(1, 'Resume file is required')
-});
+  
+}).strict();
 
 module.exports = { resumeFormValidation };
