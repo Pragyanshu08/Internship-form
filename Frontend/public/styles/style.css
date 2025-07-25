@@ -1,0 +1,442 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container {
+  width: 90%;
+  height: 100vh;
+  background-color: transparent;
+  padding: 2rem;
+  border-radius: 20px;
+  color: #000;
+  position: relative;
+}
+
+/* Toggle Button Navigation */
+.toggle-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  background-color: #28282f;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.toggle-buttons div {
+  flex: 1;
+}
+
+.toggle-buttons button {
+  width: 100%;
+  padding: 0.8rem 0;
+  border: none;
+  background-color: transparent;
+  color: #ecf0f1;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.toggle-buttons button.active,
+.toggle-buttons button:hover {
+  box-shadow: inset 0 -16px 40px white;
+  height: 100%;
+}
+
+.first-toggle:first-child{
+  box-shadow: inset 0 -16px 40px white;
+}
+
+/* Form academic */
+.contains{
+  border: 2px solid;
+  border-radius: 10px;
+  margin-top: 1rem;
+  padding: .5rem;
+}
+
+/* Form Steps */
+.form-step {
+  display: none;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.form-step.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #29292c;
+  text-decoration: underline;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+input[type="month"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.7rem 0;
+  margin-top: 0.3rem;
+  border-radius: 8px;
+  border: none;
+  border-bottom: 1px solid #757575;
+  outline: none;
+  color: #4c4b4b;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #3498db;
+}
+
+/* Buttons */
+button.next,
+button.prev,
+button.submit,
+button.new{
+  margin-top: 2rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  background-color: #008cff;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+
+button:hover {
+  background-color: #28282f;
+}
+
+/* File Upload */
+input[type="file"] {
+  padding: 0.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+/* Select Multiple */
+select[multiple] {
+  height: auto;
+}
+
+
+/* admin reveal button */
+
+#admin-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #000000, #333333);
+  color: white;
+  font-weight: bold;
+  font-family: monospace;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0ff;
+  transition: 0.3s;
+}
+
+#admin-btn:hover {
+  background-color: #111;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #0ff;
+}
+
+.flash-reveal {
+  animation: flash 0.4s ease-in-out;
+}
+@keyframes flash {
+  0% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+
+/* project form  */
+span input{
+  position: relative;
+  width: auto;
+}
+
+button.add{
+  padding-right: 15px;
+  width: 35px;
+  height: 40px;
+  position: relative;
+  left: 97%;
+  right: 0;
+  top: -42px;
+  border: none;
+  border-left: 1px solid;
+  background-color:transparent;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hide{
+  display: none;
+}
+
+.newInput{
+  height: auto;
+  max-height: 1200px;
+}
+
+button.new{
+  position: relative;
+  top: 0;
+  right: -74%;
+  
+}
+
+/* Experience Section */
+.experience-section{
+  padding-bottom: 1rem;
+  
+}
+
+#duration{
+  margin-bottom: .5rem;
+}
+
+/* for the multi select dropdown */
+
+.multi-select {
+  position: relative;
+  width: auto;
+  background: white;
+  border: none;
+  border-bottom: 1px solid #757575;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.selected-items span {
+  background: #545459;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.selected-items span i {
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.multi-select input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-top: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 10;
+  display: none;
+}
+
+.options.active {
+  display: block;
+}
+
+.options div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.options div:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* Toastify styles */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+.toastify.on {
+  animation:  shake 0.5s ease-in-out infinite;
+  /*shakestartsafterslide*/box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  font-family: 'Segoe UI', sans-serif;
+  padding: 14px 20px !important;
+  font-size: 15px;
+  line-height: 1.4;
+  backdrop-filter: blur(20px);
+  -webkit-animation:  shake 0.5s ease-in-out infinite;
+}
+
+/* Styling for certification */
+
+#certifications-container > div:first-child {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#certifications-container input {
+  flex: 1;
+  padding: 6px;
+  font-size: 14px;
+}
+
+.add-cert {
+  padding: 6px 12px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#certificationItems {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cert-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.remove-cert {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Upload button styling */
+
+.custom-file-upload {
+  margin-top: 1rem;
+  font-family: sans-serif;
+}
+
+.file-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #aaa;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+#file-name {
+  color: #555;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 80%;
+}
+
+#browse-btn {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#browse-btn:hover {
+  background-color: #0056b3;
+}
+
+
+/*  */
+
+.invalid-field {
+  border-color: red;
+}
+
+.error-message {
+  margin-top: 2px;
+  font-weight: 500;
+}
