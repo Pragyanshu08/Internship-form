@@ -97,6 +97,9 @@ const resumeFormValidation = z.object({
     required_error: 'Position is required'
   }).min(1, 'Position is required'),
 
+  experience_desc: z.string().max(1000).optional(),
+
+
   duration: z.string({
     required_error: 'Duration is required'
   }).min(1, 'Duration is required')

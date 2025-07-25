@@ -46,6 +46,8 @@ router.post('/submit', (req, res) => {
         req.body.lastName = req.body.lastName.trim();
       }
 
+      delete req.body.resume;
+
       // ✅ Now validate with Zod
       const result = resumeFormValidation.safeParse(req.body);
 

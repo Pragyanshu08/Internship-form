@@ -85,7 +85,9 @@
           <% student.experiences?.forEach(exp => { %>
             <p><strong><%= exp.company_name %></strong> || <%= exp.position %></p>
             <p><%= exp.duration %></p>
-            <p><%=exp.desc %>Description</p>
+            <% if (exp.experience_desc) { %>
+             <p><strong>Description:</strong> <%= exp.experience_desc %></p>
+            <% } %>
             <br>
           <% }) %>
           <hr>

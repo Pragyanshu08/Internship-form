@@ -21,7 +21,14 @@ const projectSchema = new mongoose.Schema({
 const experienceSchema = new mongoose.Schema({
   company_name: String,
   position: String,
-  duration: String
+  experience_desc: {
+    type: String,
+    trim: true,
+    maxlength: 100,
+    default: ""
+  },
+  duration: String,
+
 }, { _id: false });
 
 const resumeSchema = new mongoose.Schema({

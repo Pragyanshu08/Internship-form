@@ -62,7 +62,9 @@ router.get('/auth/redirect', async (req, res) => {
 //   }
 // });
 
-router.get('/login/dashboard', async (req, res) => {
+//!api/admin/login/dashboard
+
+router.get('/login/dashboard', AdminAuth ,async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;        // Default page = 1
     const limit = parseInt(req.query.limit) || 10;     // Default limit = 10
@@ -93,8 +95,7 @@ router.get('/login/dashboard', async (req, res) => {
 
 
 //!add AdminAuth middleware
-
-router.get('/login/uploads/:filename', (req, res) => {
+router.get('/login/uploads/:filename', AdminAuth ,(req, res) => {
   // console.log(path.join(__dirname, '..', '..', '..' ,'frontend' ,'uploads', req.params.filename));
   const filePath = path.join(__dirname, '..', '..', '..' ,'frontend' ,'uploads', req.params.filename);
   if (fs.existsSync(filePath)) {
@@ -127,29 +128,29 @@ router.get("/logout", (req, res) => {
   });
 });
 
-router.get("/dashboard", async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10;
-    const skip = (page - 1) * limit;
+// router.get("/dashboard", async (req, res) => {
+//   try {
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = 10;
+//     const skip = (page - 1) * limit;
 
-    const totalStudents = await ResumeForm.countDocuments();
-    const totalPages = Math.ceil(totalStudents / limit);
+//     const totalStudents = await ResumeForm.countDocuments();
+//     const totalPages = Math.ceil(totalStudents / limit);
 
-    const students = await ResumeForm.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
+//     const students = await ResumeForm.find()
+//       .sort({ createdAt: -1 })
+//       .skip(skip)
+//       .limit(limit);
 
-    res.render("admin-dashboard", {
-      students,
-      currentPage: page,
-      totalPages,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server error");
-  }
-});
+//     res.render("admin-dashboard", {
+//       students,
+//       currentPage: page,
+//       totalPages,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Server error");
+//   }
+// });
 
 module.exports = router;
